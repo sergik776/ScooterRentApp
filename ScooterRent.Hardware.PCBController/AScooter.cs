@@ -10,7 +10,7 @@ namespace ScooterRent.Hardware.HAL
     /// Делегат изменения свойства
     /// </summary>
     /// <param name="position">Позиция</param>
-    public delegate void PropertyHandler(RecieveProperty p);
+    public delegate void PropertyHandler(PhysicalAddress mac, RecieveProperty p);
 
     /// <summary>
     /// Абстрактный класс самоката
@@ -29,7 +29,7 @@ namespace ScooterRent.Hardware.HAL
 
         public EndPoint? IP {get { return Client.Client.RemoteEndPoint; } }
 
-        public PhysicalAddress MAC { get; private set; }
+        public PhysicalAddress MAC { get; protected set; }
 
         public event PropertyHandler? PropertyChanged;
 
@@ -69,35 +69,35 @@ namespace ScooterRent.Hardware.HAL
             {
                 case Enums.RecieveProperty.MAC:
                     MAC = pack.Value;
-                    PropertyChanged?.Invoke(RecieveProperty.MAC);
+                    PropertyChanged?.Invoke(MAC, RecieveProperty.MAC);
                     break;
 
                 case RecieveProperty.Position:
                     Position = pack.Value;
-                    PropertyChanged?.Invoke(RecieveProperty.Position);
+                    PropertyChanged?.Invoke(MAC, RecieveProperty.Position);
                     break;
 
                 case RecieveProperty.BateryLevel:
                     BatteryLevel = pack.Value;
-                    PropertyChanged?.Invoke(RecieveProperty.BateryLevel);
+                    PropertyChanged?.Invoke(MAC, RecieveProperty.BateryLevel);
                     break;
 
                 case RecieveProperty.Speed:
                     Speed = (int)pack.Value;
-                    PropertyChanged?.Invoke(RecieveProperty.Speed);
+                    PropertyChanged?.Invoke(MAC, RecieveProperty.Speed);
                     break;
 
                 case RecieveProperty.State:
                     State = pack.Value;
-                    PropertyChanged?.Invoke(RecieveProperty.State);
+                    PropertyChanged?.Invoke(MAC, RecieveProperty.State);
                     break;
 
                 default:
                     
                     break;
             }
-            System.Console.Clear();
-            System.Console.WriteLine(this);
+            //System.Console.Clear();
+            //System.Console.WriteLine(this);
         }
 
         public abstract bool Lock();

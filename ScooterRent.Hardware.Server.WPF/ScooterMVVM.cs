@@ -27,7 +27,7 @@ namespace ScooterRent.Hardware.Server.WPF
             base.PropertyChanged += ScooterMVVM_PropertyChanged;//при изменении состояния скутера вызываем обновление вьюхи
         }
 
-        private void ScooterMVVM_PropertyChanged(RecieveProperty p)
+        private void ScooterMVVM_PropertyChanged(PhysicalAddress mac, RecieveProperty p)
         {
             switch (p)//Определяем тип изменения
             {

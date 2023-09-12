@@ -26,6 +26,11 @@ namespace ScooterRent.Hardware.HAL
             base.Position = new Position(0, 0);
         }
 
+        public Scooter(PhysicalAddress mac, TcpClient client) : base(client)
+        {
+            MAC = mac;
+        }
+
         public override bool Lock()
         {
             throw new NotImplementedException();
