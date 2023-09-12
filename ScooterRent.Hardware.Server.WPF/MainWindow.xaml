@@ -1,0 +1,58 @@
+﻿<Window x:Class="ScooterRent.Hardware.Server.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ScooterRent.Hardware.Server.WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Background="AliceBlue" Grid.Row="2" Orientation="Vertical">
+            <TextBlock Text="{Binding Path=Scooter.MAC}"/>
+            <TextBlock Text="{Binding Path=Scooter.PositionS}"/>
+            <TextBlock Text="{Binding Path=Scooter.BatteryLevel}"/>
+            <TextBlock Text="{Binding Path=Scooter.Speed}"/>
+            <TextBlock Text="{Binding Path=Scooter.State}"/>
+        </StackPanel>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Scooters}" SelectedItem="{Binding Scooter}">
+        </DataGrid>
+
+        <Button Grid.Row="0" Content="Refrash" x:Name="refBtn" Click="refBtn_Click"/>
+
+        <Image Source="Без имени.png" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2"/>
+
+        <ItemsControl Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding Scooters}" Background="{x:Null}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Background="{x:Null}" />
+                    <!-- Используйте Canvas в качестве панели размещения -->
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Left" Value="{Binding Path=Position.Latitude}" />
+                    <!-- Привязка X-координаты из контекста -->
+                    <Setter Property="Canvas.Top" Value="{Binding Path=Position.Longitude}" />
+                    <!-- Привязка Y-координаты из контекста -->
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!-- Здесь можно создать шаблон для отображения элемента списка -->
+                    <Border Width="5" Height="5" Background="Red">
+                        <!-- Контент вашего элемента -->
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>
