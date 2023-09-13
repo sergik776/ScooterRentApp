@@ -14,19 +14,21 @@ namespace ScooterRent.Hardware.HAL
     public class ScooterService
     {
         public List<Scooter> Scooters { get { return _Scooters.Select(x => x.Value).ToList(); } }
-
+        public Scooter GetById(PhysicalAddress k)
+        {
+            return _Scooters[BitConverter.ToString(((PhysicalAddress)k).GetAddressBytes())];
+        }
         public event PropertyHandler? PropertyChanged;
-        Dictionary<byte[], Scooter> _Scooters;
+        Dictionary<string, Scooter> _Scooters;
         TcpListener listener;
 
         public ScooterService()
         {
-            _Scooters = new Dictionary<byte[], Scooter>();
+            _Scooters = new Dictionary<string, Scooter>();
             listener = new TcpListener(IPAddress.Any, 8888);
             listener.Start();
 
             Task.Factory.StartNew(() => {
-
                 try
                 {
                     while (true)
@@ -44,7 +46,7 @@ namespace ScooterRent.Hardware.HAL
                                     {
                                         var sc = new Scooter(pack.Value, tcpClient);
                                         sc.PropertyChanged += PropertyChanged;
-                                        _Scooters.Add(((PhysicalAddress)pack.Value).GetAddressBytes(), sc);
+                                        _Scooters.Add(BitConverter.ToString(((PhysicalAddress)pack.Value).GetAddressBytes()), sc);
                                     }
                                 }
                                 catch (Exception ex)

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
@@ -16,62 +17,39 @@ namespace ScooterRent.Hardware.Server.WPF
     /// <summary>
     /// Класс вьюхи скутера, унаследован от базового скутера
     /// </summary>
-    class ScooterMVVM : Scooter, INotifyPropertyChanged
+    class ScooterMVVM : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Констурктор
-        /// </summary>
-        /// <param name="c">ТСП поток стутера</param>
-        public ScooterMVVM(TcpClient c) : base(c)
-        {
-            base.PropertyChanged += ScooterMVVM_PropertyChanged;//при изменении состояния скутера вызываем обновление вьюхи
-        }
-
-        private void ScooterMVVM_PropertyChanged(PhysicalAddress mac, RecieveProperty p)
-        {
-            switch (p)//Определяем тип изменения
-            {
-                case RecieveProperty.MAC: //вызываем изменения соответствующего свойства в вьюхе
-                    OnPropertyChanged(nameof(MAC));
-                    break;
-
-                case RecieveProperty.Position:
-                    OnPropertyChanged(nameof(Position));
-                    break;
-
-                case RecieveProperty.BateryLevel:
-                    OnPropertyChanged(nameof(BatteryLevel));
-                    break;
-
-                case RecieveProperty.Speed:
-                    OnPropertyChanged(nameof(Speed));
-                    break;
-
-                case RecieveProperty.State:
-                    OnPropertyChanged(nameof(State));
-                    break;
-            }
-        }
-
-        //Заменяем старые свойтва модели на новые свойства с реализацией INotifyPropertyChanged (ключевое слово new)
-        public new string State { get { return base.State.ToString(); } set { OnPropertyChanged(nameof(State)); } }
-        //Тут позиция не заменяется а добавляется новая, так как в вью нужно получить координаты для точки,
-        //а этот стринг для таблицы
-        public string PositionS { get { return base.Position.ToString(); } set { OnPropertyChanged(nameof(PositionS)); } }
-        public new string BatteryLevel { get { return base.BatteryLevel.ToString() + "%"; } set { OnPropertyChanged(nameof(BatteryLevel)); } }
-        public new string Speed { get { return base.Speed.ToString() + " km/h"; } set { OnPropertyChanged(nameof(Speed)); } }
-        public new string MAC { get { return base.MAC.ToString(); } set { OnPropertyChanged(nameof(MAC)); } }
-
-
-
-
-
+        private string _State;
+        public string State { get { return _State; } set { _State = value; OnPropertyChanged(nameof(State)); } }
+        private string _BatteryLevel;
+        public string BatteryLevel { get { return _BatteryLevel; } set { _BatteryLevel = value; OnPropertyChanged(nameof(BatteryLevel)); } }
+        private string _Speed;
+        public string Speed { get { return _Speed; } set { _Speed = value; OnPropertyChanged(nameof(Speed)); } }
+        private string _MAC;
+        public string MAC { get { return _MAC; } set { _MAC = value; OnPropertyChanged(nameof(MAC)); } }
+        private EndPoint? _IP;
+        public EndPoint? IP { get { return _IP; } set { _IP = value; OnPropertyChanged(nameof(IP)); } }
+        private Position _Position;
+        public Position Position { get { return _Position; } set { _Position = value; OnPropertyChanged(nameof(Position)); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+
+        public static implicit operator ScooterMVVM(Scooter scooter)
+        {
+            return new ScooterMVVM()
+            {
+                IP = scooter.IP,
+                BatteryLevel = scooter.BatteryLevel + "%",
+                MAC = BitConverter.ToString(scooter.MAC.GetAddressBytes()),
+                Position = scooter.Position,
+                Speed = scooter.Speed.ToString(),
+                State = scooter.State.ToString()
+            };
         }
     }
 }

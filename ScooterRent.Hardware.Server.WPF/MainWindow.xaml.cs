@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ScooterRent.Hardware.HAL;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -22,20 +23,13 @@ namespace ScooterRent.Hardware.Server.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        MainVindowViewModel M;
-
         public MainWindow()
         {
             InitializeComponent();
-            M = new MainVindowViewModel();
-            M.BindingWindow(this);
-            DataContext = M;
         }
 
         private void refBtn_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = null;
-            DataContext = M;
         }
     }
 }

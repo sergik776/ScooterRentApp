@@ -18,12 +18,12 @@
         </Grid.ColumnDefinitions>
         <StackPanel Background="AliceBlue" Grid.Row="2" Orientation="Vertical">
             <TextBlock Text="{Binding Path=Scooter.MAC}"/>
-            <TextBlock Text="{Binding Path=Scooter.PositionS}"/>
+            <TextBlock Text="{Binding Path=Scooter.Position}"/>
             <TextBlock Text="{Binding Path=Scooter.BatteryLevel}"/>
             <TextBlock Text="{Binding Path=Scooter.Speed}"/>
             <TextBlock Text="{Binding Path=Scooter.State}"/>
         </StackPanel>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Scooters}" SelectedItem="{Binding Scooter}">
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Scooters}" SelectedItem="{Binding Scooter}"  IsReadOnly="True" >
         </DataGrid>
 
         <Button Grid.Row="0" Content="Refrash" x:Name="refBtn" Click="refBtn_Click"/>
@@ -33,7 +33,7 @@
         <ItemsControl Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding Scooters}" Background="{x:Null}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas Background="{x:Null}" />
+                    <Canvas  />
                     <!-- Используйте Canvas в качестве панели размещения -->
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
@@ -48,7 +48,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <!-- Здесь можно создать шаблон для отображения элемента списка -->
-                    <Border Width="5" Height="5" Background="Red">
+                    <Border Width="7" Height="7" Background="Red">
                         <!-- Контент вашего элемента -->
                     </Border>
                 </DataTemplate>

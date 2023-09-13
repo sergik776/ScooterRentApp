@@ -8,11 +8,11 @@
         /// <summary>
         /// Широта
         /// </summary>
-        public double Latitude { get; protected set; }
+        public double Latitude { get;  set; }
         /// <summary>
         /// Долгота
         /// </summary>
-        public double Longitude { get; protected set; }
+        public double Longitude { get; set; }
 
         /// <summary>
         /// Конструктор
