@@ -1,5 +1,5 @@
 ﻿using ScooterRent.Hardware.HAL;
-using ScooterRent.Hardware.HAL.HardwareProtocol;
+using ScooterRentApp.Hardware.Server;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,8 +19,8 @@ namespace ScooterRent.Hardware.Server.WPF
     /// </summary>
     class ScooterMVVM : INotifyPropertyChanged
     {
-        private string _State;
-        public string State { get { return _State; } set { _State = value; OnPropertyChanged(nameof(State)); } }
+        private string _RentalTime;
+        public string RentalTime { get { return _RentalTime; } set { _RentalTime = value; OnPropertyChanged(nameof(RentalTime)); } }
         private string _BatteryLevel;
         public string BatteryLevel { get { return _BatteryLevel; } set { _BatteryLevel = value; OnPropertyChanged(nameof(BatteryLevel)); } }
         private string _Speed;
@@ -48,7 +48,7 @@ namespace ScooterRent.Hardware.Server.WPF
                 MAC = BitConverter.ToString(scooter.MAC.GetAddressBytes()),
                 Position = scooter.Position,
                 Speed = scooter.Speed.ToString(),
-                State = scooter.State.ToString()
+                RentalTime = scooter.RentalTime.ToString()
             };
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System.Net.NetworkInformation;
 using static ScooterRent.Hardware.HAL.Enums;
 
-namespace ScooterRent.Hardware.HAL.HardwareProtocol
+namespace ScooterRentApp.Hardware.Server.HardwareProtocol
 {
     /// <summary>
     /// Пакет полученных данных

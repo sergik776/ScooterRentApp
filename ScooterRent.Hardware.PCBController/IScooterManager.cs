@@ -10,7 +10,7 @@ namespace ScooterRent.Hardware.HAL
     /// <summary>
     /// Интерфейс управления самокатом
     /// </summary>
-    internal interface IScooterManager : IBaseScooter
+    public interface IScooterManager : IBaseScooter
     {
         /// <summary>
         /// Метод блокировки самоката

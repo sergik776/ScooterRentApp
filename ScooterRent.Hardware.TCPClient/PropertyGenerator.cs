@@ -25,10 +25,10 @@ namespace ScooterRent.Hardware.TCPClient
         /// </summary>
         /// <param name="speed">Скорость [км/ч]</param>
         /// <returns></returns>
-        public static byte[] NewSpeedPacket(int speed)
+        public static byte[] NewSpeedPacket(sbyte speed)
         {
             RecieveProperty R = RecieveProperty.Speed;
-            byte[] bytes = BitConverter.GetBytes(speed);
+            byte[] bytes = new byte[] { (byte)speed };
             //if (BitConverter.IsLittleEndian)
             //    Array.Reverse(bytes);
             return new byte[] { (byte)R }.Concat(bytes).ToArray();
@@ -43,16 +43,6 @@ namespace ScooterRent.Hardware.TCPClient
         {
             RecieveProperty R = RecieveProperty.MAC;
             return new byte[] { (byte)R }.Concat(mac.GetAddressBytes()).ToArray();
-        }
-
-        /// <summary>
-        /// Генерация пакета состояния самоката
-        /// </summary>
-        /// <param name="state">Состояние</param>
-        /// <returns></returns>
-        public static byte[] NewStatePacket(ScooterState state)
-        {
-            return new byte[] { (byte)RecieveProperty.State, (byte)state };
         }
 
         /// <summary>
@@ -74,9 +64,21 @@ namespace ScooterRent.Hardware.TCPClient
         /// </summary>
         /// <param name="bl">Уровень заряда [0-100]</param>
         /// <returns></returns>
-        public static byte[] NewBateryLevelPacket(int bl)
+        public static byte[] NewBateryLevelPacket(byte bl)
         {
             RecieveProperty R = RecieveProperty.BateryLevel;
+            byte[] bytes = new byte[] { bl };
+            return new byte[] { (byte)R }.Concat(bytes).ToArray();
+        }
+
+        /// <summary>
+        /// Генерация пакета уровня заряда батареи
+        /// </summary>
+        /// <param name="bl">Уровень заряда [0-100]</param>
+        /// <returns></returns>
+        public static byte[] NewRentaltimePacket(ushort bl)
+        {
+            RecieveProperty R = RecieveProperty.RentalTime;
             byte[] bytes = BitConverter.GetBytes(bl);
             return new byte[] { (byte)R }.Concat(bytes).ToArray();
         }

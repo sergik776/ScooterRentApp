@@ -1,15 +1,16 @@
-﻿using ScooterRent.Hardware.HAL.HardwareProtocol;
+﻿using ScooterRent.Hardware.HAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using static ScooterRent.Hardware.HAL.Enums;
+using ScooterRentApp.Hardware.Server.HardwareProtocol;
 
-namespace ScooterRent.Hardware.HAL
+namespace ScooterRentApp.Hardware.Server
 {
     public class ScooterService
     {
@@ -36,13 +37,13 @@ namespace ScooterRent.Hardware.HAL
                         try
                         {
                             var tcpClient = listener.AcceptTcpClientAsync().Result;
-                            Task.Factory.StartNew(() => { 
+                            Task.Factory.StartNew(() => {
                                 byte[] buffer = new byte[17];
                                 tcpClient.Client.Receive(buffer);
                                 try
                                 {
                                     var pack = PacketDesiarizable.Desiarizable(buffer);
-                                    if(pack.Property == RecieveProperty.MAC)
+                                    if (pack.Property == RecieveProperty.MAC)
                                     {
                                         var sc = new Scooter(pack.Value, tcpClient);
                                         sc.PropertyChanged += PropertyChanged;

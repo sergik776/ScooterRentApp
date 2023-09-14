@@ -40,7 +40,7 @@
             /// <summary>
             /// Состояние скутера
             /// </summary>
-            State,
+            RentalTime,
             /// <summary>
             /// Текущая скорость
             /// </summary>

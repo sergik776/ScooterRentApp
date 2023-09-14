@@ -1,43 +1,40 @@
-﻿using ScooterRent.Hardware.HAL.HardwareProtocol;
-using System.Net;
+﻿using ScooterRent.Hardware.HAL;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 using static ScooterRent.Hardware.HAL.Enums;
+using ScooterRentApp.Hardware.Server.HardwareProtocol;
 
-namespace ScooterRent.Hardware.HAL
+namespace ScooterRentApp.Hardware.Server
 {
-    /// <summary>
-    /// Делегат изменения свойства
-    /// </summary>
-    /// <param name="position">Позиция</param>
-    public delegate void PropertyHandler(PhysicalAddress mac, RecieveProperty p);
-
-    /// <summary>
-    /// Абстрактный класс самоката
-    /// </summary>
-    public abstract class AScooter : IScooterManager, IScooterClient
+    public class Scooter : IBaseScooter
     {
         protected TcpClient Client;
 
-        public ScooterState State { get; protected set; }
+        public ushort RentalTime { get; protected set; }
 
         public Position Position { get; protected set; }
 
-        public int BatteryLevel { get; protected set; }
+        public byte BatteryLevel { get; protected set; }
 
-        public int Speed { get; protected set; }
+        public sbyte Speed { get; protected set; }
 
-        public EndPoint? IP {get { return Client.Client.RemoteEndPoint; } }
+        public EndPoint? IP { get { return Client.Client.RemoteEndPoint; } }
 
         public PhysicalAddress MAC { get; protected set; }
 
         public event PropertyHandler? PropertyChanged;
 
-        public AScooter(TcpClient c) 
+        public Scooter(PhysicalAddress mac, TcpClient c)
         {
             Client = c;
             Position = new Position(0, 0);
-            MAC = new PhysicalAddress(new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 });
+            MAC = mac;
             start();
         }
 
@@ -68,44 +65,39 @@ namespace ScooterRent.Hardware.HAL
             switch (pack.Property)
             {
                 case Enums.RecieveProperty.MAC:
-                    MAC = pack.Value;
+                    MAC = (PhysicalAddress)pack.Value;
                     PropertyChanged?.Invoke(MAC, RecieveProperty.MAC);
                     break;
 
                 case RecieveProperty.Position:
-                    Position = pack.Value;
+                    Position = (Position)pack.Value;
                     PropertyChanged?.Invoke(MAC, RecieveProperty.Position);
                     break;
 
                 case RecieveProperty.BateryLevel:
-                    BatteryLevel = pack.Value;
+                    BatteryLevel = (byte)pack.Value;
                     PropertyChanged?.Invoke(MAC, RecieveProperty.BateryLevel);
                     break;
 
                 case RecieveProperty.Speed:
-                    Speed = (int)pack.Value;
+                    Speed = (sbyte)pack.Value;
                     PropertyChanged?.Invoke(MAC, RecieveProperty.Speed);
                     break;
 
-                case RecieveProperty.State:
-                    State = pack.Value;
-                    PropertyChanged?.Invoke(MAC, RecieveProperty.State);
+                case RecieveProperty.RentalTime:
+                    RentalTime = (ushort)pack.Value;
+                    PropertyChanged?.Invoke(MAC, RecieveProperty.RentalTime);
                     break;
 
                 default:
-                    
+
                     break;
             }
-            //System.Console.Clear();
-            //System.Console.WriteLine(this);
         }
-
-        public abstract bool Lock();
-        public abstract bool Unlock();
 
         public override string ToString()
         {
-            return $"Scooter: [MAC: {MAC}] [IP: {IP}] [State: {State}] [Position: {Position}] [BateryLevel: {BatteryLevel}%] [Speed: {Speed}km/h]";
+            return $"Scooter: [MAC: {MAC}] [IP: {IP}] [RentalTime: {TimeSpan.FromSeconds(RentalTime).ToString("HH:mm:ss")}] [Position: {Position}] [BateryLevel: {BatteryLevel}%] [Speed: {Speed}km/h]";
         }
     }
 }
