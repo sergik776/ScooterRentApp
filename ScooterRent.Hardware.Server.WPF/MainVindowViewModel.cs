@@ -45,6 +45,7 @@ namespace ScooterRent.Hardware.Server.WPF
         private void ScooterService_PropertyChanged(System.Net.NetworkInformation.PhysicalAddress mac, Enums.RecieveProperty p)
         {
             var s = Scooters.FirstOrDefault(x => x.MAC == BitConverter.ToString(mac.GetAddressBytes()));
+            Application.Current.Dispatcher.Invoke(() => { 
             if (s == null)
             {
                 Scooters.Add(scooterService.GetById(mac));
@@ -80,6 +81,7 @@ namespace ScooterRent.Hardware.Server.WPF
                         break;
                 }
             }
+            });
         }
     }
 
