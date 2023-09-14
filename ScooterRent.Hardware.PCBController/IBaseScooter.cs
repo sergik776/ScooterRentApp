@@ -8,16 +8,14 @@ using static ScooterRent.Hardware.HAL.Enums;
 
 namespace ScooterRent.Hardware.HAL
 {
-    internal interface IBaseScooter
+    /// <summary>
+    /// Делегат изменения свойства
+    /// </summary>
+    /// <param name="position">Позиция</param>
+    public delegate void PropertyHandler(PhysicalAddress mac, RecieveProperty p);
+
+    public interface IBaseScooter : IScooterClient
     {
-        /// <summary>
-        /// МАС адрес самоката
-        /// </summary>
-        PhysicalAddress MAC { get; }
-        /// <summary>
-        /// Состояние скутера
-        /// </summary>
-        public ScooterState State { get; }
         /// <summary>
         /// Событие изменения свойств
         /// </summary>
@@ -29,10 +27,14 @@ namespace ScooterRent.Hardware.HAL
         /// <summary>
         /// Уровень заряда батареи
         /// </summary>
-        public int BatteryLevel { get; }
+        public byte BatteryLevel { get; }
         /// <summary>
         /// Текущая скорость
         /// </summary>
-        public int Speed { get; }
+        public sbyte Speed { get; }
+        /// <summary>
+        /// Состояние скутера
+        /// </summary>
+        public ushort RentalTime { get; }
     }
 }

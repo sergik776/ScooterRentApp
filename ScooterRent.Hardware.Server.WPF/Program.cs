@@ -1,4 +1,5 @@
 ﻿using ScooterRent.Hardware.HAL;
+using ScooterRentApp.Hardware.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;

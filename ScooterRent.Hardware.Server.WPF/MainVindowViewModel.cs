@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Threading;
+using ScooterRentApp.Hardware.Server;
 
 namespace ScooterRent.Hardware.Server.WPF
 {
@@ -60,9 +61,9 @@ namespace ScooterRent.Hardware.Server.WPF
                         s.BatteryLevel = updatedScooter.BatteryLevel.ToString();
                         s.OnPropertyChanged(nameof(s.BatteryLevel));
                         break;
-                    case Enums.RecieveProperty.State:
-                        s.State = updatedScooter.State.ToString();
-                        s.OnPropertyChanged(nameof(s.State));
+                    case Enums.RecieveProperty.RentalTime:
+                        s.RentalTime = updatedScooter.RentalTime.ToString();
+                        s.OnPropertyChanged(nameof(s.RentalTime));
                         break;
                     case Enums.RecieveProperty.Speed:
                         s.Speed = updatedScooter.Speed.ToString();

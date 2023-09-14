@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "ScooterRentApp.Hardware.Server/1.0.0": {
+        "dependencies": {
+          "ScooterRent.Hardware.HAL": "1.0.0"
+        },
+        "runtime": {
+          "ScooterRentApp.Hardware.Server.dll": {}
+        }
+      },
+      "ScooterRent.Hardware.HAL/1.0.0": {
+        "runtime": {
+          "ScooterRent.Hardware.HAL.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ScooterRentApp.Hardware.Server/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ScooterRent.Hardware.HAL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

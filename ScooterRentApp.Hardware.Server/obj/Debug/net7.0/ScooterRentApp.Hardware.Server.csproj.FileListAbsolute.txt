@@ -1,0 +1,15 @@
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\obj\Debug\net7.0\ScooterRentApp.Hardware.Server.csproj.AssemblyReference.cache
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\obj\Debug\net7.0\ScooterRentApp.Hardware.Server.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\obj\Debug\net7.0\ScooterRentApp.Hardware.Server.AssemblyInfoInputs.cache
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\obj\Debug\net7.0\ScooterRentApp.Hardware.Server.AssemblyInfo.cs
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\obj\Debug\net7.0\ScooterRentApp.Hardware.Server.csproj.CoreCompileInputs.cache
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\bin\Debug\net7.0\ScooterRentApp.Hardware.Server.deps.json
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\bin\Debug\net7.0\ScooterRentApp.Hardware.Server.dll
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\bin\Debug\net7.0\ScooterRentApp.Hardware.Server.pdb
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\bin\Debug\net7.0\ScooterRent.Hardware.HAL.dll
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\bin\Debug\net7.0\ScooterRent.Hardware.HAL.pdb
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\obj\Debug\net7.0\ScooterRentApp.Hardware.Server.csproj.CopyComplete
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\obj\Debug\net7.0\ScooterRentApp.Hardware.Server.dll
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\obj\Debug\net7.0\refint\ScooterRentApp.Hardware.Server.dll
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\obj\Debug\net7.0\ScooterRentApp.Hardware.Server.pdb
+D:\Projects\ScooterRentApp\ScooterRentApp.Hardware.Server\obj\Debug\net7.0\ref\ScooterRentApp.Hardware.Server.dll

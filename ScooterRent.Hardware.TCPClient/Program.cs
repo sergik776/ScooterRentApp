@@ -1,6 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using ScooterRent.Hardware.HAL;
-using ScooterRent.Hardware.HAL.HardwareProtocol;
 using ScooterRent.Hardware.TCPClient;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -48,13 +47,13 @@ void GetTypeEnum(RecieveProperty pq, TcpClient c)
         //case RecieveProperty.Position: var p = MyStaticGenerators.GenerateRandomPosition(); 
           //  Console.WriteLine("Send Position"); c.Client.Send(PropertyGenerator.NewPositionPacket(p)); break;
 
-        case RecieveProperty.BateryLevel: var p1 = PropertyGenerator.NewBateryLevelPacket(MyStaticGenerators.R.Next(0, 100)); 
+        case RecieveProperty.BateryLevel: var p1 = PropertyGenerator.NewBateryLevelPacket((byte)MyStaticGenerators.R.Next(0, 100)); 
             Console.WriteLine("Send BateryLevel"); c.Client.Send(p1); break;
 
-        case RecieveProperty.Speed: var p2 = PropertyGenerator.NewSpeedPacket(MyStaticGenerators.R.Next(0, 30));
+        case RecieveProperty.Speed: var p2 = PropertyGenerator.NewSpeedPacket((sbyte)MyStaticGenerators.R.Next(-3, 30));
             Console.WriteLine("Send Speed"); c.Client.Send(p2); break;
 
-        case RecieveProperty.State: var p3 = PropertyGenerator.NewStatePacket(MyStaticGenerators.GetRandomEnumValue<ScooterState>());
+        case RecieveProperty.RentalTime: var p3 = PropertyGenerator.NewRentaltimePacket((ushort)MyStaticGenerators.R.Next(0, ushort.MaxValue));
             Console.WriteLine("Send State"); c.Client.Send(p3); break;
 
         default: break;

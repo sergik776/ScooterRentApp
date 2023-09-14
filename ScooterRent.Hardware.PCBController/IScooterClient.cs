@@ -12,7 +12,7 @@ namespace ScooterRent.Hardware.HAL
     /// <summary>
     /// Адресный интерфейс скутера
     /// </summary>
-    internal interface IScooterClient
+    public interface IScooterClient
     {
         /// <summary>
         /// Айпи скутера

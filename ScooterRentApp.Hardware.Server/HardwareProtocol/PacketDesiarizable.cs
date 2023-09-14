@@ -1,5 +1,4 @@
 ﻿using ScooterRent.Hardware.HAL;
-using ScooterRent.Hardware.HAL.HardwareProtocol;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static ScooterRent.Hardware.HAL.Enums;
 
-namespace ScooterRent.Hardware.HAL.HardwareProtocol
+namespace ScooterRentApp.Hardware.Server.HardwareProtocol
 {
     /// <summary>
     /// Класс рассшифровки пакета от скутера
@@ -34,13 +33,13 @@ namespace ScooterRent.Hardware.HAL.HardwareProtocol
                         )); return res;
 
                 case RecieveProperty.BateryLevel:
-                    return new ScooterDataPacket(RecieveProperty.BateryLevel, BitConverter.ToInt32(data, 1));
+                    return new ScooterDataPacket(RecieveProperty.BateryLevel, (byte)data[1]);
 
                 case RecieveProperty.Speed:
-                    return new ScooterDataPacket(RecieveProperty.Speed, BitConverter.ToInt64(data, 1));
+                    return new ScooterDataPacket(RecieveProperty.Speed, (sbyte)data[1]);
 
-                case RecieveProperty.State:
-                    return new ScooterDataPacket(RecieveProperty.State, (ScooterState)data[1]);
+                case RecieveProperty.RentalTime:
+                    return new ScooterDataPacket(RecieveProperty.RentalTime, BitConverter.ToUInt16(data, 1));
 
                 default: throw new Exception("Битый пакет");
             }
