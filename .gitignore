@@ -49,11 +49,14 @@ _ReSharper.*/
 ScooterRent.Hardware.PCBController/bin/
 ScooterRent.Hardware.Server.WPF/bin/
 ScooterRent.Hardware.TCPClient/bin/
+ScooterRentApp.Hardware.Server/bin/
 
 ScooterRent.Hardware.PCBController/obj/
 ScooterRent.Hardware.Server.WPF/obj/
 ScooterRent.Hardware.TCPClient/obj/
+ScooterRentApp.Hardware.Server/obj/
 
 ScooterRent.Hardware.PCBController/Properties/
 ScooterRent.Hardware.Server.WPF/Properties/
+ScooterRentApp.Hardware.Server/Properties/
 ScooterRent.Hardware.TCPClient/Properties/
