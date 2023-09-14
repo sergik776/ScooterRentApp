@@ -50,26 +50,33 @@ namespace ScooterRent.Hardware.TCPClient
             Init();
             timer.Start();
 
-            Task.Factory.StartNew(() => { Read(); });
+            RentalTimer = new System.Timers.Timer(1000);
+            RentalTimer.Elapsed += RentalTimer_Elapsed;
+
+            Read(Tcp.GetStream());
         }
 
-        private void Read()
+        private void Read(NetworkStream s)
         {
-            while(true)
+            Console.WriteLine("Запускаю прослушивание");
+            Task.Factory.StartNew(() => 
             {
-                byte[] buf = new byte[3];
-                Tcp.Client.Receive(buf);
-                if (buf[0] == 36)
+                while (true)
                 {
-                    RentalTime = BitConverter.ToUInt16(buf, 1);
-                    RentalTimer = new System.Timers.Timer(1000);
-                    RentalTimer.Elapsed += RentalTimer_Elapsed;
-                    Console.WriteLine($"{MAC} Set Rental Time {RentalTime}");
-                    Tcp.Client.Send(PropertyGenerator.NewRentaltimePacket(RentalTime));
-                    RentalTimer.Start();
-                    _Position.MoveToPoint();
+                    Console.WriteLine("Слушаю");
+                    byte[] buf = new byte[3];
+                    s.Read(buf, 0, 3);
+                    if (buf[0] == 36)
+                    {
+                        RentalTime = BitConverter.ToUInt16(buf, 1);
+                        RentalTimer.Start();
+                        Console.WriteLine($"{MAC} Получил аренду {RentalTime}");
+                        Thread.Sleep(100);
+                        Tcp.Client.Send(PropertyGenerator.NewRentaltimePacket(RentalTime));
+                        Task.Factory.StartNew(() => { _Position.MoveToPoint(); });
+                    }
                 }
-            }
+            });
         }
 
         private void RentalTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
@@ -80,7 +87,6 @@ namespace ScooterRent.Hardware.TCPClient
                 Speed = 0;
                 Tcp.Client.Send(PropertyGenerator.NewRentaltimePacket(RentalTime));
                 RentalTimer.Stop();
-                RentalTimer.Dispose();
                 Console.WriteLine($"Rental time is End");
             }
             else
