@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option csharp_namespace = "ScooterRentApp.Hardware.Server";
+
+package greet;
+
+// The greeting service definition.
+service ScooterGRPCService {
+  rpc SetScooter (ScooterRequest) returns (ScooterResponse);
+    rpc SetPropertyScooter(ScooterPropertyUpdateRequest) returns (ScooterResponse);
+}
+
+message ScooterRequest 
+{
+  	string Mac = 1;
+	string Position = 2;
+	string Speed = 3;
+	string RentalTime = 4;
+	string BatteryLevel = 5;
+}
+
+message ScooterResponse
+{
+	  string LastId = 1;
+}
+
+message ScooterPropertyUpdateRequest
+{
+	string Mac = 1;
+	string PropertyName = 2;
+	string PropertyValue = 3;
+}

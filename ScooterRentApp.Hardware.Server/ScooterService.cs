@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static ScooterRent.Hardware.HAL.Enums;
 using ScooterRentApp.Hardware.Server.HardwareProtocol;
+using Grpc.Net.Client;
 
 namespace ScooterRentApp.Hardware.Server
 {
@@ -28,8 +29,15 @@ namespace ScooterRentApp.Hardware.Server
             _Scooters[mac].SetRentalTime(seconds);
         }
 
+        GrpcChannel _channel;
+        ScooterGRPCService.ScooterGRPCServiceClient _grpcClient;
+
         public ScooterService()
         {
+            _channel = GrpcChannel.ForAddress("https://localhost:7018");
+            _grpcClient = new ScooterGRPCService.ScooterGRPCServiceClient(_channel);
+
+
             _Scooters = new Dictionary<string, IScooterManager>();
             listener = new TcpListener(IPAddress.Any, 8888);
             listener.Start();
@@ -50,9 +58,17 @@ namespace ScooterRentApp.Hardware.Server
                                     var pack = PacketDesiarizable.Desiarizable(buffer);
                                     if (pack.Property == RecieveProperty.MAC)
                                     {
-                                        var sc = new Scooter(pack.Value, tcpClient);
+                                        var sc = new Scooter(pack.Value, tcpClient, _grpcClient);
                                         sc.PropertyChanged += PropertyChanged;
                                         _Scooters.Add(BitConverter.ToString(((PhysicalAddress)pack.Value).GetAddressBytes()), sc);
+                                        var reply = _grpcClient.SetScooter(new ScooterRequest() 
+                                        { 
+                                            Mac = sc.MAC.ToString(),
+                                            BatteryLevel = sc.BatteryLevel + "%",
+                                            Position = sc.Position.ToString(),
+                                            RentalTime = sc.RentalTime.ToString(),
+                                            Speed = sc.Speed + "km/h"
+                                        });
                                     }
                                 }
                                 catch (Exception ex)

@@ -8,7 +8,7 @@
 
 <ItemGroup>
   <Protobuf Include="Protos\ScooterProtocol.proto" GrpcServices="Client" />
-</ItemGroup>	
+</ItemGroup>
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.24.3" />
     <PackageReference Include="Grpc.Net.Client" Version="2.57.0" />
@@ -20,10 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ScooterRent.Hardware.PCBController\ScooterRent.Hardware.HAL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Protos\" />
   </ItemGroup>
 
 </Project>

@@ -30,12 +30,15 @@ namespace ScooterRentApp.Hardware.Server
 
         public event PropertyHandler? PropertyChanged;
 
-        public Scooter(PhysicalAddress mac, TcpClient c)
+        private ScooterGRPCService.ScooterGRPCServiceClient GRPClient;
+
+        public Scooter(PhysicalAddress mac, TcpClient c, ScooterGRPCService.ScooterGRPCServiceClient gRPClient)
         {
             Client = c;
             Position = new Position(0, 0);
             MAC = mac;
             start();
+            GRPClient = gRPClient;
         }
 
         void start()
@@ -66,26 +69,56 @@ namespace ScooterRentApp.Hardware.Server
             {
                 case Enums.RecieveProperty.MAC:
                     MAC = (PhysicalAddress)pack.Value;
+                    GRPClient.SetPropertyScooterAsync(new ScooterPropertyUpdateRequest()
+                    {
+                        Mac = MAC.ToString(),
+                        PropertyName = "mac",
+                        PropertyValue = MAC.ToString()
+                    });
                     PropertyChanged?.Invoke(MAC, RecieveProperty.MAC);
                     break;
 
                 case RecieveProperty.Position:
                     Position = (Position)pack.Value;
+                    GRPClient.SetPropertyScooterAsync(new ScooterPropertyUpdateRequest()
+                    {
+                        Mac = MAC.ToString(),
+                        PropertyName = "position",
+                        PropertyValue = Position.ToString()
+                    });
                     PropertyChanged?.Invoke(MAC, RecieveProperty.Position);
                     break;
 
                 case RecieveProperty.BateryLevel:
                     BatteryLevel = (byte)pack.Value;
+                    GRPClient.SetPropertyScooterAsync(new ScooterPropertyUpdateRequest()
+                    {
+                        Mac = MAC.ToString(),
+                        PropertyName = "batterylevel",
+                        PropertyValue = BatteryLevel.ToString()
+                    });
                     PropertyChanged?.Invoke(MAC, RecieveProperty.BateryLevel);
                     break;
 
                 case RecieveProperty.Speed:
                     Speed = (sbyte)pack.Value;
+                    GRPClient.SetPropertyScooterAsync(new ScooterPropertyUpdateRequest()
+                    {
+                        Mac = MAC.ToString(),
+                        PropertyName = "speed",
+                        PropertyValue = Speed.ToString()
+                    });
                     PropertyChanged?.Invoke(MAC, RecieveProperty.Speed);
                     break;
 
                 case RecieveProperty.RentalTime:
                     RentalTime = (ushort)pack.Value;
+                    GRPClient.SetPropertyScooterAsync(new ScooterPropertyUpdateRequest()
+                    {
+                        Mac = MAC.ToString(),
+                        PropertyName = "rentaltime",
+                        PropertyValue = RentalTime.ToString()
+                    });
                     PropertyChanged?.Invoke(MAC, RecieveProperty.RentalTime);
                     break;
 
