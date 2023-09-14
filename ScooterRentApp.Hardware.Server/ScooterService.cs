@@ -14,18 +14,23 @@ namespace ScooterRentApp.Hardware.Server
 {
     public class ScooterService
     {
-        public List<Scooter> Scooters { get { return _Scooters.Select(x => x.Value).ToList(); } }
-        public Scooter GetById(PhysicalAddress k)
+        public List<IScooterManager> Scooters { get { return _Scooters.Select(x => x.Value).ToList(); } }
+        public IScooterManager GetById(PhysicalAddress k)
         {
             return _Scooters[BitConverter.ToString(((PhysicalAddress)k).GetAddressBytes())];
         }
         public event PropertyHandler? PropertyChanged;
-        Dictionary<string, Scooter> _Scooters;
+        Dictionary<string, IScooterManager> _Scooters;
         TcpListener listener;
+
+        public void SetScooterTime(string mac, ushort seconds)
+        {
+            _Scooters[mac].SetRentalTime(seconds);
+        }
 
         public ScooterService()
         {
-            _Scooters = new Dictionary<string, Scooter>();
+            _Scooters = new Dictionary<string, IScooterManager>();
             listener = new TcpListener(IPAddress.Any, 8888);
             listener.Start();
 

@@ -28,7 +28,7 @@ namespace ScooterRent.Hardware.TCPClient
         /// Метод передвижения по точкам
         /// </summary>
         /// <param name="client">ТСП поток от самоката</param>
-        public void MoveToPoint(TcpClient client)
+        public void MoveToPoint()
         {
             var lastPoint = MyStaticGenerators.GenerateRandomPosition();//Генерируем конечную точку
             //Генерируем список точкет для достижения последней
@@ -38,10 +38,8 @@ namespace ScooterRent.Hardware.TCPClient
             {
                 this.Latitude = a.Item1;
                 this.Longitude = a.Item2;
-                client.Client.Send(PropertyGenerator.NewPositionPacket(new Position(a.Item1, a.Item2)));
-                Thread.Sleep(200);//Ждем чуть чуть
+                Thread.Sleep(1000);//Ждем чуть чуть
             }
-            MoveToPoint(client);//Когда пришли к последней точке, запускаем процесс заново
         }
 
         public void MoveRandomRecursive(TcpClient client)

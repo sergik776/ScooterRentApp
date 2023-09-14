@@ -43,13 +43,31 @@ namespace ScooterRent.Hardware.Server.WPF
             
         }
 
+        private int _Time;
+        public int Time { get { return _Time; } set { _Time = value; OnPropertyChanged(nameof(Time)); } }
+
+        private RelayCommand _SetRent;
+        public RelayCommand SetRent
+        {
+            get
+            {
+                return _SetRent ?? (_SetRent = new RelayCommand(async obj =>
+                {
+                    if (Scooter != null)
+                    {
+                        scooterService.SetScooterTime(Scooter.MAC, (ushort)Time);
+                    }
+                }));
+            }
+        }
+
         private void ScooterService_PropertyChanged(System.Net.NetworkInformation.PhysicalAddress mac, Enums.RecieveProperty p)
         {
             var s = Scooters.FirstOrDefault(x => x.MAC == BitConverter.ToString(mac.GetAddressBytes()));
             Application.Current.Dispatcher.Invoke(() => { 
             if (s == null)
             {
-                Scooters.Add(scooterService.GetById(mac));
+                Scooters.Add((Scooter)scooterService.GetById(mac));
             }
             else
             {

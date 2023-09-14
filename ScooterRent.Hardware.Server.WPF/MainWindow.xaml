@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScooterRent.Hardware.Server.WPF"
+        xmlns:converters="clr-namespace:ScooterRent.Hardware.Server.WPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <converters:UshortToTimeSpanConverter x:Key="UshortToTimeSpanConverter" />
+        <converters:UshortToColorConverter x:Key="UshortToColorConverter" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -21,7 +26,9 @@
             <TextBlock Text="{Binding Path=Scooter.Position}"/>
             <TextBlock Text="{Binding Path=Scooter.BatteryLevel}"/>
             <TextBlock Text="{Binding Path=Scooter.Speed}"/>
-            <TextBlock Text="{Binding Path=Scooter.State}"/>
+            <TextBlock Text="{Binding Path=Scooter.RentalTime, Converter={StaticResource UshortToTimeSpanConverter}}"/>
+            <TextBox Text="{Binding Time, StringFormat=N0}" Width="100"/>
+            <Button Command="{Binding SetRent}" Content="SetRent" Width="100"/>
         </StackPanel>
         <DataGrid Grid.Row="1" ItemsSource="{Binding Scooters}" SelectedItem="{Binding Scooter}"  IsReadOnly="True" >
         </DataGrid>
@@ -48,7 +55,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <!-- Здесь можно создать шаблон для отображения элемента списка -->
-                    <Border Width="7" Height="7" Background="Red">
+                    <Border Width="7" Height="7" Background="{Binding Path=RentalTime, Converter={StaticResource UshortToColorConverter}}">
                         <!-- Контент вашего элемента -->
                     </Border>
                 </DataTemplate>

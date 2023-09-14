@@ -12,15 +12,6 @@ namespace ScooterRent.Hardware.HAL
     /// </summary>
     public interface IScooterManager : IBaseScooter
     {
-        /// <summary>
-        /// Метод блокировки самоката
-        /// </summary>
-        /// <returns></returns>
-        abstract bool Lock();
-        /// <summary>
-        /// Метод разблокировки самоката
-        /// </summary>
-        /// <returns></returns>
-        abstract bool Unlock();
+        void SetRentalTime(ushort seconds);
     }
 }

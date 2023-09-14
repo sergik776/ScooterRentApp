@@ -6,6 +6,12 @@ using System.Net.Sockets;
 using static ScooterRent.Hardware.HAL.Enums;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-FakeScooter F = new FakeScooter();
+List<FakeScooter> scooters = new List<FakeScooter>();
+
+for(int i = 0; i < 10; i++)
+{
+    FakeScooter F = new FakeScooter();
+    scooters.Add(F);
+}
 
 Console.ReadKey();

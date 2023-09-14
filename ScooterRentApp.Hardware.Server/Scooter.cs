@@ -12,7 +12,7 @@ using ScooterRentApp.Hardware.Server.HardwareProtocol;
 
 namespace ScooterRentApp.Hardware.Server
 {
-    public class Scooter : IBaseScooter
+    public class Scooter : IScooterManager
     {
         protected TcpClient Client;
 
@@ -97,7 +97,15 @@ namespace ScooterRentApp.Hardware.Server
 
         public override string ToString()
         {
-            return $"Scooter: [MAC: {MAC}] [IP: {IP}] [RentalTime: {RentalTime}] [Position: {Position}] [BateryLevel: {BatteryLevel}%] [Speed: {Speed}km/h]";
+            var q = TimeSpan.FromSeconds(RentalTime);
+            return $"Scooter: [MAC: {MAC}] [IP: {IP}] [RentalTime: {q.Hours}:{q.Minutes}:{q.Seconds}] [Position: {Position}] [BateryLevel: {BatteryLevel}%] [Speed: {Speed}km/h]";
+        }
+
+        public void SetRentalTime(ushort seconds)
+        {
+            byte[] mes = new byte[1] { (byte)Enums.SendCommand.SetRentTime };
+            var send = mes.Concat(BitConverter.GetBytes(seconds)).ToArray();
+            Client.Client.Send(send);
         }
     }
 }
