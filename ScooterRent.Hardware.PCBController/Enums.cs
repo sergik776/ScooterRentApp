@@ -31,7 +31,7 @@
         /// <summary>
         /// Тип полученного свойства самоката
         /// </summary>
-        public enum RecieveProperty
+        public enum RecieveProperty : byte
         {
             /// <summary>
             /// Заряд батареи

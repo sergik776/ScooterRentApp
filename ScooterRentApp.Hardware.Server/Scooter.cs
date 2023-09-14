@@ -97,7 +97,7 @@ namespace ScooterRentApp.Hardware.Server
 
         public override string ToString()
         {
-            return $"Scooter: [MAC: {MAC}] [IP: {IP}] [RentalTime: {TimeSpan.FromSeconds(RentalTime).ToString("HH:mm:ss")}] [Position: {Position}] [BateryLevel: {BatteryLevel}%] [Speed: {Speed}km/h]";
+            return $"Scooter: [MAC: {MAC}] [IP: {IP}] [RentalTime: {RentalTime}] [Position: {Position}] [BateryLevel: {BatteryLevel}%] [Speed: {Speed}km/h]";
         }
     }
 }
