@@ -74,6 +74,7 @@ builder.Services.AddSwaggerGen(c => {
 
 // Add services to the container.
 builder.Services.AddSingleton<ScooterListService>();
+builder.Services.AddScoped<SendCommandService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

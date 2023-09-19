@@ -8,7 +8,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 List<FakeScooter> scooters = new List<FakeScooter>();
 
-for(int i = 0; i < 10000; i++)
+for(int i = 0; i < 10; i++)
 {
     FakeScooter F = new FakeScooter();
     Thread.Sleep(300);

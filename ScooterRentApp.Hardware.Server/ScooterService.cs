@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using static ScooterRent.Hardware.HAL.Enums;
 using ScooterRentApp.Hardware.Server.HardwareProtocol;
 using Grpc.Net.Client;
+using System.Net.Http;
+using ScooterRentApp.Hardware.Server.HardwareProtocol.Commands;
 
 namespace ScooterRentApp.Hardware.Server
 {
@@ -23,6 +25,7 @@ namespace ScooterRentApp.Hardware.Server
         public event PropertyHandler? PropertyChanged;
         Dictionary<string, IScooterManager> _Scooters;
         TcpListener listener;
+        TcpListener CommandListner;
 
         public void SetScooterTime(string mac, ushort seconds)
         {
@@ -34,8 +37,6 @@ namespace ScooterRentApp.Hardware.Server
 
         public ScooterService()
         {
-            
-
             _channel = GrpcChannel.ForAddress("https://localhost:7018");
             _grpcClient = new ScooterGRPCService.ScooterGRPCServiceClient(_channel);
 
@@ -43,6 +44,31 @@ namespace ScooterRentApp.Hardware.Server
             _Scooters = new Dictionary<string, IScooterManager>();
             listener = new TcpListener(IPAddress.Any, 8888);
             listener.Start();
+
+            CommandListner = new TcpListener(IPAddress.Any, 8889);
+            CommandListner.Start();
+
+            Task.Factory.StartNew(() => 
+            {
+                try
+                {
+                    while (true)
+                    {
+                        using (var client = CommandListner.AcceptTcpClient())
+                        {
+                            byte[] buffer = new byte[9];
+                            client.Client.Receive(buffer);
+                            var command = SetRentalTime.GetTime(buffer);
+                            _Scooters[BitConverter.ToString(command.MAC)].SetRentalTime(command.Seconds);
+                            //client.Dispose();
+                        }
+                    }
+                }
+                catch(Exception ex) 
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            });
 
             Task.Factory.StartNew(() => {
                 try
