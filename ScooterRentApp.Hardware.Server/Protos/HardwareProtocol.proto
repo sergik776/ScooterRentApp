@@ -1,0 +1,21 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ScooterRentApp.Hardware.Server";
+
+package greet;
+
+// The greeting service definition.
+service HardwareProtocolService {
+	rpc SetRentalTime1(SetRentalTimeRequest1) returns (ScooterResponse1);
+}
+
+message ScooterResponse1
+{
+	  string LastId = 1;
+}
+
+message SetRentalTimeRequest1
+{
+	string Mac = 1;
+	string Seconds = 2;
+}

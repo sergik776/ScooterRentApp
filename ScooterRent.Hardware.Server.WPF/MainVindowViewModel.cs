@@ -71,8 +71,8 @@ namespace ScooterRent.Hardware.Server.WPF
             }
             else
             {
-                // Обновляем свойства существующего скутера на основе scooterService
-                var updatedScooter = scooterService.GetById(mac);
+                    // Обновляем свойства существующего скутера на основе scooterService
+                    var updatedScooter = scooterService.GetById(mac);
                 switch(p)
                 {
                     case Enums.RecieveProperty.BateryLevel: 

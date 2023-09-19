@@ -49,16 +49,8 @@ namespace ScooterRentApp.Hardware.Server
                 {
                     byte[] buffer = new byte[17];
                     Client.Client.Receive(buffer);
-
-                    try
-                    {
-                        var pack = PacketDesiarizable.Desiarizable(buffer);
-                        SetScooter(pack);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Console.WriteLine(ex.Message);
-                    }
+                    var pack = PacketDesiarizable.Desiarizable(buffer);
+                    SetScooter(pack);
                 }
             });
         }

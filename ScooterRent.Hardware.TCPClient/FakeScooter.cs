@@ -45,7 +45,7 @@ namespace ScooterRent.Hardware.TCPClient
             Speed = 0;
             RentalTime = 0;
 
-            timer = new System.Timers.Timer(1000);
+            timer = new System.Timers.Timer(100);
             timer.Elapsed += Timer_Elapsed;
             Init();
             timer.Start();
@@ -120,7 +120,8 @@ namespace ScooterRent.Hardware.TCPClient
                     Tcp.Client.Send(PropertyGenerator.NewRentaltimePacket(RentalTime));
                 break;
                 case RecieveProperty.Speed:
-                    Tcp.Client.Send(PropertyGenerator.NewSpeedPacket(Speed));
+                    var s = PropertyGenerator.NewSpeedPacket(Speed);
+                    Tcp.Client.Send(s);
                 break;
                 case RecieveProperty.Position:
                     Tcp.Client.Send(PropertyGenerator.NewPositionPacket(Position));

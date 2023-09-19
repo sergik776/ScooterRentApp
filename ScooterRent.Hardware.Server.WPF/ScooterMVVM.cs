@@ -32,6 +32,9 @@ namespace ScooterRent.Hardware.Server.WPF
         private Position _Position;
         public Position Position { get { return _Position; } set { _Position = value; OnPropertyChanged(nameof(Position)); } }
 
+        private int _RequestCount;
+        public int RequestCount { get { return _RequestCount; } set { _RequestCount = value; OnPropertyChanged(nameof(RequestCount)); } }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

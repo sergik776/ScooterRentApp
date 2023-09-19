@@ -6,8 +6,9 @@ package greet;
 
 // The greeting service definition.
 service ScooterGRPCService {
-  rpc SetScooter (ScooterRequest) returns (ScooterResponse);
-    rpc SetPropertyScooter(ScooterPropertyUpdateRequest) returns (ScooterResponse);
+	rpc SetScooter (ScooterRequest) returns (ScooterResponse);
+	rpc SetPropertyScooter(ScooterPropertyUpdateRequest) returns (ScooterResponse);
+	rpc SetRentalTime(SetRentalTimeRequest) returns (ScooterResponse);
 }
 
 message ScooterRequest 
@@ -29,4 +30,10 @@ message ScooterPropertyUpdateRequest
 	string Mac = 1;
 	string PropertyName = 2;
 	string PropertyValue = 3;
+}
+
+message SetRentalTimeRequest
+{
+	string Mac = 1;
+	string Seconds = 2;
 }

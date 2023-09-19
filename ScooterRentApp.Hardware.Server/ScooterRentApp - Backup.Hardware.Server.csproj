@@ -9,6 +9,9 @@
 <ItemGroup>
   <Protobuf Include="Protos\ScooterProtocol.proto" GrpcServices="Client" />
 </ItemGroup>
+<ItemGroup>
+  <Protobuf Include="Protos\HardwareProtocol.proto" GrpcServices="Server" />
+</ItemGroup>
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.24.3" />
     <PackageReference Include="Grpc.Net.Client" Version="2.57.0" />
