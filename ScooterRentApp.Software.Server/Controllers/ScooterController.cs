@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ScooterRentApp.Software.Server.Services;
+using System.Security.Claims;
+using System.Text;
 
 namespace ScooterRentApp.Software.Server.Controllers
 {
@@ -37,6 +39,21 @@ namespace ScooterRentApp.Software.Server.Controllers
             }
             _sendCommandService.SendRentalTime(byteArray, model.Seconds);
             return Ok();
+        }
+
+        [HttpGet("secured")]
+        public IActionResult Secured()
+        {
+            // Получаем текущего пользователя из контекста
+            ClaimsPrincipal user = HttpContext.User;
+            StringBuilder SB = new StringBuilder();
+            // Получаем и выводим кляймы пользователя
+            foreach (Claim claim in user.Claims)
+            {
+                SB.AppendLine($"{claim.Type} {claim.Value}");
+                // Обрабатываем кляймы, как необходимо
+            }
+            return Ok(SB.ToString());
         }
     }
 }

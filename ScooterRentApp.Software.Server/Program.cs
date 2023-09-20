@@ -76,20 +76,37 @@ builder.Services.AddSwaggerGen(c => {
 builder.Services.AddSingleton<ScooterListService>();
 builder.Services.AddScoped<SendCommandService>();
 builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddGrpc();
 var app = builder.Build();
+app.UseCors("AllowAnyOrigin");
+app.MapGrpcService<ScooterService>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API V1");
+    });
 }
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.MapGrpcService<ScooterService>();
+
+app.MapGet("/hello", () => "HelloWorld");
+
+
 app.Run();

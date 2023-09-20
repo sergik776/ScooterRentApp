@@ -105,7 +105,7 @@ namespace ScooterRentApp.Hardware.Server
 
                 case RecieveProperty.RentalTime:
                     RentalTime = (ushort)pack.Value;
-                    GRPClient.SetPropertyScooterAsync(new ScooterPropertyUpdateRequest()
+                     var q = GRPClient.SetPropertyScooterAsync(new ScooterPropertyUpdateRequest()
                     {
                         Mac = MAC.ToString(),
                         PropertyName = "rentaltime",
