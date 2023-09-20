@@ -52,6 +52,8 @@ ScooterRent.Hardware.TCPClient/bin/
 ScooterRentApp.Hardware.Server/bin/
 ScooterRentApp.Software.Server/bin/
 ScooterRentApp.Hardware.Server.Console/bin/
+ScooterRent.Client.Mobile/ScooterRent.Client.Mobile/bin/
+ScooterRent.Client.Mobile/ScooterRent.Client.Mobile.Android/bin/
 
 ScooterRent.Hardware.PCBController/obj/
 ScooterRent.Hardware.Server.WPF/obj/
@@ -59,6 +61,8 @@ ScooterRent.Hardware.TCPClient/obj/
 ScooterRentApp.Hardware.Server/obj/
 ScooterRentApp.Software.Server/obj/
 ScooterRentApp.Hardware.Server.Console/obj/
+ScooterRent.Client.Mobile/ScooterRent.Client.Mobile/obj/
+ScooterRent.Client.Mobile/ScooterRent.Client.Mobile.Android/obj/
 
 ScooterRent.Hardware.PCBController/Properties/
 ScooterRent.Hardware.Server.WPF/Properties/
@@ -66,8 +70,8 @@ ScooterRentApp.Hardware.Server/Properties/
 ScooterRent.Hardware.TCPClient/Properties/
 ScooterRentApp.Software.Server/Properties/
 ScooterRentApp.Hardware.Server.Console/Properties/
-
-
+ScooterRent.Client.Mobile/ScooterRent.Client.Mobile/Properties/
+ScooterRent.Client.Mobile/ScooterRent.Client.Mobile.Android/Properties/
 
 
 

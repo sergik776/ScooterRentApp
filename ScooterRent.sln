@@ -19,7 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScooterRentApp.Hardware.Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScooterRentApp.Software.Server", "ScooterRentApp.Software.Server\ScooterRentApp.Software.Server.csproj", "{4D4CDF36-93F7-4980-967B-84C9D9FD8F47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScooterRentApp.Hardware.Server.Console", "ScooterRentApp.Hardware.Server.Console\ScooterRentApp.Hardware.Server.Console.csproj", "{BE7C9036-3214-4FDF-B9EB-F0495A45231F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScooterRentApp.Hardware.Server.Console", "ScooterRentApp.Hardware.Server.Console\ScooterRentApp.Hardware.Server.Console.csproj", "{BE7C9036-3214-4FDF-B9EB-F0495A45231F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{F4CC18C1-3D85-460C-AA49-1279EEC2B48B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScooterRent.Client.Mobile", "ScooterRent.Client.Mobile\ScooterRent.Client.Mobile\ScooterRent.Client.Mobile.csproj", "{B0D09744-B826-4765-B63E-2D8DB1C256AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScooterRent.Client.Mobile.Android", "ScooterRent.Client.Mobile\ScooterRent.Client.Mobile.Android\ScooterRent.Client.Mobile.Android.csproj", "{E9283079-EF55-4B5D-A23A-23C4F1207C10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +57,16 @@ Global
 		{BE7C9036-3214-4FDF-B9EB-F0495A45231F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE7C9036-3214-4FDF-B9EB-F0495A45231F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE7C9036-3214-4FDF-B9EB-F0495A45231F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0D09744-B826-4765-B63E-2D8DB1C256AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0D09744-B826-4765-B63E-2D8DB1C256AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0D09744-B826-4765-B63E-2D8DB1C256AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0D09744-B826-4765-B63E-2D8DB1C256AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9283079-EF55-4B5D-A23A-23C4F1207C10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9283079-EF55-4B5D-A23A-23C4F1207C10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9283079-EF55-4B5D-A23A-23C4F1207C10}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E9283079-EF55-4B5D-A23A-23C4F1207C10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9283079-EF55-4B5D-A23A-23C4F1207C10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9283079-EF55-4B5D-A23A-23C4F1207C10}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +77,9 @@ Global
 		{07EF0505-3C0E-4308-A388-40F43DFA6FCC} = {673F1361-8370-412C-A659-B032D9CCFA68}
 		{4232DFCA-01AB-45C3-89E8-2E99A3E1B535} = {673F1361-8370-412C-A659-B032D9CCFA68}
 		{4D4CDF36-93F7-4980-967B-84C9D9FD8F47} = {7D698629-8847-4C87-8F57-35DE281FDAB7}
+		{F4CC18C1-3D85-460C-AA49-1279EEC2B48B} = {AD92C580-C66A-461B-953C-5CF6A297B9D0}
+		{B0D09744-B826-4765-B63E-2D8DB1C256AA} = {F4CC18C1-3D85-460C-AA49-1279EEC2B48B}
+		{E9283079-EF55-4B5D-A23A-23C4F1207C10} = {F4CC18C1-3D85-460C-AA49-1279EEC2B48B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {30213189-8131-4626-ADC1-B8BCFD5248AA}
