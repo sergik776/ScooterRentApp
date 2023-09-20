@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScooterRent.Hardware.Server
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScooterRentApp.Hardware.Server", "ScooterRentApp.Hardware.Server\ScooterRentApp.Hardware.Server.csproj", "{4232DFCA-01AB-45C3-89E8-2E99A3E1B535}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScooterRentApp.Software.Server", "ScooterRentApp.Software.Server\ScooterRentApp.Software.Server.csproj", "{4D4CDF36-93F7-4980-967B-84C9D9FD8F47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScooterRentApp.Software.Server", "ScooterRentApp.Software.Server\ScooterRentApp.Software.Server.csproj", "{4D4CDF36-93F7-4980-967B-84C9D9FD8F47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScooterRentApp.Hardware.Server.Console", "ScooterRentApp.Hardware.Server.Console\ScooterRentApp.Hardware.Server.Console.csproj", "{BE7C9036-3214-4FDF-B9EB-F0495A45231F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{4D4CDF36-93F7-4980-967B-84C9D9FD8F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D4CDF36-93F7-4980-967B-84C9D9FD8F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D4CDF36-93F7-4980-967B-84C9D9FD8F47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE7C9036-3214-4FDF-B9EB-F0495A45231F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE7C9036-3214-4FDF-B9EB-F0495A45231F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE7C9036-3214-4FDF-B9EB-F0495A45231F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE7C9036-3214-4FDF-B9EB-F0495A45231F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

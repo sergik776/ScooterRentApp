@@ -9,6 +9,8 @@
         public ScooterListService(ILogger<ScooterListService> _logger)
         {
             Scooters = new List<ScooterRequest>();
+            Scooters.Add(new ScooterRequest() { Mac = "qwe", BatteryLevel = "asd", Position = "zxc", RentalTime = "200", Speed = "24" });
+            Scooters.Add(new ScooterRequest() { Mac = "qwe", BatteryLevel = "asd", Position = "zxc", RentalTime = "0", Speed = "24" });
             this.logger = _logger;
         }
 

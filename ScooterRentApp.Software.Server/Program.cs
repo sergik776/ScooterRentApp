@@ -14,6 +14,15 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 IConfiguration configurationManager = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory) // Укажите путь к корневой папке приложения
             .AddJsonFile("appsettings.json") // Укажите имя файла конфигурации
@@ -76,21 +85,14 @@ builder.Services.AddSwaggerGen(c => {
 builder.Services.AddSingleton<ScooterListService>();
 builder.Services.AddScoped<SendCommandService>();
 builder.Services.AddControllers();
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAnyOrigin", builder =>
-    {
-        builder.AllowAnyOrigin()
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-    });
-});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddGrpc();
 var app = builder.Build();
 app.UseCors("AllowAnyOrigin");
+app.MapGet("/hello", () => "HelloWorld");
 app.MapGrpcService<ScooterService>();
 if (app.Environment.IsDevelopment())
 {
@@ -102,11 +104,10 @@ if (app.Environment.IsDevelopment())
 }
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseHttpsRedirection();
-app.UseAuthorization();
+//app.UseHttpsRedirection();
 app.MapControllers();
 
-app.MapGet("/hello", () => "HelloWorld");
+
 
 
 app.Run();

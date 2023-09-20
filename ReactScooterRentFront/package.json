@@ -1,0 +1,20 @@
+{
+  "name": "helloapp",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npx babel index.jsx --out-file index.js && start http://localhost:3000/ && node app.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.0",
+    "@babel/core": "^7.17.0",
+    "@babel/preset-react": "^7.16.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-react"
+    ]
+  },
+  "dependencies": {
+    "react-router-dom": "^6.16.0"
+  }
+}

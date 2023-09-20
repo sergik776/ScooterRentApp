@@ -9,7 +9,7 @@ namespace ScooterRentApp.Software.Server.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class ScooterController : ControllerBase
+    public class ScooterController : StartController
     {
         private readonly ILogger<ScooterController> _logger;
         private readonly ScooterListService ScooterService;
@@ -25,7 +25,14 @@ namespace ScooterRentApp.Software.Server.Controllers
         [HttpGet()]
         public IEnumerable<ScooterRequest> GetAll()
         {
-            return ScooterService.Scooters;
+            if (RolesScooterAuth.Any(x => x == "Manager"))
+            {
+                return ScooterService.Scooters;
+            }
+            else
+            {
+                return ScooterService.Scooters.Where(x => x.RentalTime == "0");
+            }
         }
 
         [HttpPost]
@@ -50,7 +57,7 @@ namespace ScooterRentApp.Software.Server.Controllers
             // ѕолучаем и выводим кл€ймы пользовател€
             foreach (Claim claim in user.Claims)
             {
-                SB.AppendLine($"{claim.Type} {claim.Value}");
+                SB.AppendLine($"{claim.Type}***{claim.Value}");
                 // ќбрабатываем кл€ймы, как необходимо
             }
             return Ok(SB.ToString());

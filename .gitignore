@@ -51,15 +51,85 @@ ScooterRent.Hardware.Server.WPF/bin/
 ScooterRent.Hardware.TCPClient/bin/
 ScooterRentApp.Hardware.Server/bin/
 ScooterRentApp.Software.Server/bin/
+ScooterRentApp.Hardware.Server.Console/bin/
 
 ScooterRent.Hardware.PCBController/obj/
 ScooterRent.Hardware.Server.WPF/obj/
 ScooterRent.Hardware.TCPClient/obj/
 ScooterRentApp.Hardware.Server/obj/
 ScooterRentApp.Software.Server/obj/
+ScooterRentApp.Hardware.Server.Console/obj/
 
 ScooterRent.Hardware.PCBController/Properties/
 ScooterRent.Hardware.Server.WPF/Properties/
 ScooterRentApp.Hardware.Server/Properties/
 ScooterRent.Hardware.TCPClient/Properties/
 ScooterRentApp.Software.Server/Properties/
+ScooterRentApp.Hardware.Server.Console/Properties/
+
+
+
+
+
+# Игнорировать node_modules
+ReactScooterRentFront/node_modules
+
+# Игнорировать сгенерированные файлы
+/build
+/dist
+
+# Игнорировать package-lock.json
+/package-lock.json
+
+# Игнорировать локальные зависимости и скомпилированные файлы
+/.pnp
+.pnp.js
+
+# Игнорировать логи и временные файлы
+npm-debug.log*
+
+# Игнорировать собранные файлы
+*.log
+logs
+*.log.*
+*.access
+*.pid
+*.seed
+*.pid.lock
+
+# Игнорировать кэши
+.cache/
+.npm
+.lock-wscript
+.lock-stap-wscript
+.lock-stap
+.lock-stap.yml
+.lock-stap.yml
+*.code-workspace
+
+# Игнорировать файлы с паролем
+.env
+
+# Игнорировать файлы конфигурации
+.DS_Store
+Thumbs.db
+
+# Игнорировать конфигурационные файлы для IDE
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Игнорировать локальные настройки редактора
+.editorconfig
+
+# Игнорировать временные файлы
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.pnp
+.pnp.js

@@ -37,7 +37,7 @@ namespace ScooterRentApp.Hardware.Server
 
         public ScooterService()
         {
-            _channel = GrpcChannel.ForAddress("https://192.168.2.200:7018");
+            _channel = GrpcChannel.ForAddress("https://localhost:7018");
             _grpcClient = new ScooterGRPCService.ScooterGRPCServiceClient(_channel);
 
 
