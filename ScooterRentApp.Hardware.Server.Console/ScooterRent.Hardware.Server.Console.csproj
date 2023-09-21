@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ScooterRentApp.Hardware.Server\ScooterRentApp.Hardware.Server.csproj" />
+    <ProjectReference Include="..\ScooterRentApp.Hardware.Server\ScooterRent.Hardware.Server.csproj" />
   </ItemGroup>
 
 </Project>

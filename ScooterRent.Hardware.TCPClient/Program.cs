@@ -7,11 +7,11 @@ using static ScooterRent.Hardware.HAL.Enums;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 List<FakeScooter> scooters = new List<FakeScooter>();
-
+Thread.Sleep(5000);
 for(int i = 0; i < 10; i++)
 {
     FakeScooter F = new FakeScooter();
-    Thread.Sleep(300);
+    Thread.Sleep(2000);
     scooters.Add(F);
 }
 

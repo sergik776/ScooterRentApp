@@ -21,10 +21,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
-  </ItemGroup>
-
+  </ItemGroup>	
   <ItemGroup>
-    <ProjectReference Include="..\ScooterRent.Hardware.PCBController\ScooterRent.Hardware.HAL.csproj" />
+    <ProjectReference Include="..\ScooterRent.Hardware.PCBController\ScooterRent.Hardware.CLL.csproj" />
   </ItemGroup>
 
 </Project>

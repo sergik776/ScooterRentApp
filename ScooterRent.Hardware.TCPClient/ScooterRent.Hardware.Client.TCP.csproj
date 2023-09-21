@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ScooterRent.Hardware.PCBController\ScooterRent.Hardware.HAL.csproj" />
+    <ProjectReference Include="..\ScooterRent.Hardware.PCBController\ScooterRent.Hardware.CLL.csproj" />
   </ItemGroup>
 
 </Project>
