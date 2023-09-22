@@ -5,6 +5,25 @@
   text-align: center;
 }
 
+/* Эффект наведения на строку */
+tr:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+/* Эффект выбранной строки */
+.selected-row {
+  background-color: lightblue;
+  cursor: pointer;
+}
+
+/* Эффект клика на строку */
+.clicked-row {
+  background-color: lightcoral;
+  cursor: pointer;
+}
+
+
 .logo {
   height: 6em;
   padding: 1.5em;

@@ -12,8 +12,19 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using ScooterRent.Software.Server.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+    {
+        builder.WithOrigins("http://localhost:5173")
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials(); // ≈сли необходим доступ с учетными данными
+    });
+});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin", builder =>
@@ -51,6 +62,22 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new X509SecurityKey(certificate), // »спользуем сертификат дл€ валидации
         ClockSkew = TimeSpan.Zero // Ќе учитываем разницу во времени (можно установить другое значение)
     };
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Query["access_token"];
+
+            // если запрос направлен хабу
+            var path = context.HttpContext.Request.Path;
+            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/ScooterHub"))
+            {
+                // получаем токен из строки запроса
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        }
+    };
 });
 
 builder.Services.AddSwaggerGen(c => {
@@ -80,7 +107,7 @@ builder.Services.AddSwaggerGen(c => {
         }
     });
 });
-
+builder.Services.AddSignalR();
 // Add services to the container.
 builder.Services.AddSingleton<ScooterListService>();
 builder.Services.AddScoped<SendCommandService>();
@@ -90,10 +117,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddGrpc();
+builder.Services.AddSingleton<ScooterEventHub>();
 var app = builder.Build();
+app.UseCors("AllowSpecificOrigin");
 app.UseCors("AllowAnyOrigin");
 app.MapGet("/hello", () => "HelloWorld");
-app.MapGrpcService<ScooterService>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -104,10 +133,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseAuthentication();
 app.UseAuthorization();
-//app.UseHttpsRedirection();
 app.MapControllers();
-
-
-
-
+app.MapHub<ScooterEventHub>("/ScooterHub");
+app.MapGrpcService<ScooterService>();
 app.Run();
