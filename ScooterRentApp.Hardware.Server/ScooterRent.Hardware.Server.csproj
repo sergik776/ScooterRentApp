@@ -8,9 +8,6 @@
 
 <ItemGroup>
   <Protobuf Include="Protos\ScooterProtocol.proto" GrpcServices="Client" />
-</ItemGroup>
-<ItemGroup>
-  <Protobuf Include="Protos\HardwareProtocol.proto" GrpcServices="Server" />
 </ItemGroup>	
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.24.3" />

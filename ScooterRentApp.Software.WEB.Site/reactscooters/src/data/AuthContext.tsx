@@ -16,7 +16,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [tokens, setTokens] = useState<Tokens>(() => {
-        // Попытка получить токены из localStorage при первой загрузке
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ localStorage пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         const storedTokens = localStorage.getItem('tokens');
         return storedTokens ? JSON.parse(storedTokens) : { access_token: '', refresh_token: '' };
     });
@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 console.log(tokenData);
                 setTokens({
                     access_token: tokenData.access_token,
-                    refresh_token: tokenData.refresh_token, // Используем старый refresh_token
+                    refresh_token: tokenData.refresh_token, // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ refresh_token
                 });
                 console.log('tokens setted');
             } else {
@@ -44,12 +44,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             }
         } catch (error) {
             console.error('ne mogu obnpvit token:', error);
-            navigate('/loginpage');
+            navigate('/');
         }
     };
 
     useEffect(() => {
-        // Сохранение токенов в localStorage при их обновлении
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ localStorage пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         localStorage.setItem('tokens', JSON.stringify(tokens));
     }, [tokens]);
 

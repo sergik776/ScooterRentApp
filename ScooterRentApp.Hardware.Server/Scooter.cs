@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static ScooterRent.Hardware.HAL.Enums;
 using ScooterRentApp.Hardware.Server.HardwareProtocol;
+using Google.Protobuf;
 
 namespace ScooterRentApp.Hardware.Server
 {
@@ -39,6 +40,11 @@ namespace ScooterRentApp.Hardware.Server
             MAC = mac;
             start();
             GRPClient = gRPClient;
+
+            GRPClient.AddScooter(new MacRequest
+            {
+                Mac = ByteString.CopyFrom(MAC.GetAddressBytes())
+            });
         }
 
         void start()
@@ -57,66 +63,59 @@ namespace ScooterRentApp.Hardware.Server
 
         private void SetScooter(ScooterDataPacket pack)
         {
+            ScooterResponse response = null;
             switch (pack.Property)
             {
                 case Enums.RecieveProperty.MAC:
                     MAC = (PhysicalAddress)pack.Value;
-                    GRPClient.SetPropertyScooterAsync(new ScooterPropertyUpdateRequest()
+                    response = GRPClient.AddScooter(new MacRequest
                     {
-                        Mac = MAC.ToString(),
-                        PropertyName = "mac",
-                        PropertyValue = MAC.ToString()
+                        Mac = ByteString.CopyFrom(MAC.GetAddressBytes())
                     });
                     PropertyChanged?.Invoke(MAC, RecieveProperty.MAC);
                     break;
 
                 case RecieveProperty.Position:
                     Position = (Position)pack.Value;
-                    GRPClient.SetPropertyScooterAsync(new ScooterPropertyUpdateRequest()
+                    response = GRPClient.ChangePosition(new PositionRequest() 
                     {
-                        Mac = MAC.ToString(),
-                        PropertyName = "position",
-                        PropertyValue = Position.ToString()
+                        Mac = ByteString.CopyFrom(MAC.GetAddressBytes()),
+                        Latitude = Position.Latitude,
+                        Longitude = Position.Longitude
                     });
                     PropertyChanged?.Invoke(MAC, RecieveProperty.Position);
                     break;
 
                 case RecieveProperty.BateryLevel:
                     BatteryLevel = (byte)pack.Value;
-                    GRPClient.SetPropertyScooterAsync(new ScooterPropertyUpdateRequest()
+                    response = GRPClient.ChangeBatteryLevel(new BatteryLevelRequest() 
                     {
-                        Mac = MAC.ToString(),
-                        PropertyName = "batterylevel",
-                        PropertyValue = BatteryLevel.ToString()
+                        Mac = ByteString.CopyFrom(MAC.GetAddressBytes()),
+                        BatteryLevel = BatteryLevel
                     });
                     PropertyChanged?.Invoke(MAC, RecieveProperty.BateryLevel);
                     break;
 
                 case RecieveProperty.Speed:
                     Speed = (sbyte)pack.Value;
-                    GRPClient.SetPropertyScooterAsync(new ScooterPropertyUpdateRequest()
+                    response = GRPClient.ChangeSpeed(new SpeedRequest()
                     {
-                        Mac = MAC.ToString(),
-                        PropertyName = "speed",
-                        PropertyValue = Speed.ToString()
+                        Mac = ByteString.CopyFrom(MAC.GetAddressBytes()),
+                        Speed = Speed
                     });
                     PropertyChanged?.Invoke(MAC, RecieveProperty.Speed);
                     break;
 
                 case RecieveProperty.RentalTime:
                     RentalTime = (ushort)pack.Value;
-                     var q = GRPClient.SetPropertyScooterAsync(new ScooterPropertyUpdateRequest()
+                    response = GRPClient.ChangeRentalTime(new RentalTimeRequest()
                     {
-                        Mac = MAC.ToString(),
-                        PropertyName = "rentaltime",
-                        PropertyValue = RentalTime.ToString()
+                        Mac = ByteString.CopyFrom(MAC.GetAddressBytes()),
+                        RentalTime = RentalTime
                     });
                     PropertyChanged?.Invoke(MAC, RecieveProperty.RentalTime);
                     break;
-
-                default:
-
-                    break;
+                default: break;
             }
         }
 

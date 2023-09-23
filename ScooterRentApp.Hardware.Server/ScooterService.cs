@@ -89,14 +89,6 @@ namespace ScooterRentApp.Hardware.Server
                                         var sc = new Scooter(pack.Value, tcpClient, _grpcClient);
                                         sc.PropertyChanged += PropertyChanged;
                                         _Scooters.Add(BitConverter.ToString(((PhysicalAddress)pack.Value).GetAddressBytes()), sc);
-                                        var reply = _grpcClient.SetScooter(new ScooterRequest() 
-                                        { 
-                                            Mac = sc.MAC.ToString(),
-                                            BatteryLevel = sc.BatteryLevel + "%",
-                                            Position = sc.Position.ToString(),
-                                            RentalTime = sc.RentalTime.ToString(),
-                                            Speed = sc.Speed + "km/h"
-                                        });
                                     }
                                 }
                                 catch (Exception ex)

@@ -24,4 +24,8 @@
     <Folder Include="Protos\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ScooterRent.Hardware.PCBController\ScooterRent.Hardware.CLL.csproj" />
+  </ItemGroup>
+
 </Project>

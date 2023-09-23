@@ -4,36 +4,39 @@ option csharp_namespace = "ScooterRentApp.Hardware.Server";
 
 package greet;
 
-// The greeting service definition.
 service ScooterGRPCService {
-	rpc SetScooter (ScooterRequest) returns (ScooterResponse);
-	rpc SetPropertyScooter(ScooterPropertyUpdateRequest) returns (ScooterResponse);
-	rpc SetRentalTime(SetRentalTimeRequest) returns (ScooterResponse);
+	rpc AddScooter(MacRequest) returns (ScooterResponse);
+	rpc ChangeRentalTime(RentalTimeRequest) returns (ScooterResponse);
+	rpc ChangeBatteryLevel(BatteryLevelRequest) returns (ScooterResponse);
+	rpc ChangeSpeed(SpeedRequest) returns (ScooterResponse);
+	rpc ChangePosition(PositionRequest) returns (ScooterResponse);
 }
 
-message ScooterRequest 
-{
-  	string Mac = 1;
-	string Position = 2;
-	string Speed = 3;
-	string RentalTime = 4;
-	string BatteryLevel = 5;
-}
-
-message ScooterResponse
-{
+message ScooterResponse{
 	  string LastId = 1;
 }
 
-message ScooterPropertyUpdateRequest
-{
-	string Mac = 1;
-	string PropertyName = 2;
-	string PropertyValue = 3;
+message MacRequest {
+	bytes Mac = 1;
 }
 
-message SetRentalTimeRequest
-{
-	string Mac = 1;
-	string Seconds = 2;
+message RentalTimeRequest {
+	bytes Mac = 1;
+    uint32 RentalTime = 2;
+}
+
+message BatteryLevelRequest {
+	bytes Mac = 1;
+    fixed32 BatteryLevel = 2;
+}
+
+message SpeedRequest {
+	bytes Mac = 1;
+    int32 Speed = 2;
+}
+
+message PositionRequest {
+	bytes Mac = 1;
+    double Latitude = 2;
+	double Longitude = 3;
 }

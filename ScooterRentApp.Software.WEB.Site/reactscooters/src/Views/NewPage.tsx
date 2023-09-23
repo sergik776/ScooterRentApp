@@ -24,13 +24,13 @@ function NewPage() {
             .build();
 
         // Настраиваем обработчики событий от сервера SignalR
-        newHubConnection.on("ScooterPropercyChanged", (message: string) => {
-            console.log(`ScooterPropercyChanged ${message}`);
+        newHubConnection.on("AddScooter", (message: string) => {
+            console.log(`AddScooter ${message}`);
             // Добавьте обработку событий от сервера, как вам необходимо
         });
 
-        newHubConnection.on("ScooterConnected", (message: string) => {
-            console.log(`ScooterConnected ${message}`);
+        newHubConnection.on("UpdateScooter", (message: string) => {
+            console.log(`UpdateScooter ${message}`);
             // Добавьте обработку событий от сервера, как вам необходимо
         });
 
@@ -133,7 +133,8 @@ function NewPage() {
                 <thead>
                     <tr>
                         <th>Mac</th>
-                        <th>Position</th>
+                        <th>Position N</th>
+                        <th>Position E</th>
                         <th>Speed</th>
                         <th>Rental Time</th>
                         <th>Battery Level</th>
@@ -150,7 +151,8 @@ function NewPage() {
                             `}
                         >
                             <td>{scooter.mac}</td>
-                            <td>{scooter.position}</td>
+                            <td>{scooter.position.latitude}</td>
+                            <td>{scooter.position.longitude}</td>
                             <td>{scooter.speed}</td>
                             <td>{scooter.rentalTime}</td>
                             <td>{scooter.batteryLevel}</td>

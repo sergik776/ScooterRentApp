@@ -6,7 +6,7 @@ function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const navigate = useNavigate(); // Импортировали и использовали useNavigate
+    const navigate = useNavigate();
     const { setTokens } = useAuth();
     async function sendData() {
         const response = await fetch("http://localhost:8080/realms/TaogarSmartCloud/protocol/openid-connect/token", {
@@ -23,7 +23,7 @@ function LoginPage() {
             access_token: tokenData.access_token,
             refresh_token: tokenData.refresh_token
         });
-        // Выполняем переход на новую страницу после успешной отправки данных
+        
         navigate('/newpage');
     }
 

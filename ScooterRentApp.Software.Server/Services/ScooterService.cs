@@ -10,28 +10,41 @@ namespace ScooterRentApp.Software.Server.Services
     {
         private readonly ILogger<ScooterService> _logger;
         ScooterListService _service;
-        ScooterEventHub ScooterEventHub;
 
-        public ScooterService(ILogger<ScooterService> logger, ScooterListService listService, ScooterEventHub hub) 
+        public ScooterService(ILogger<ScooterService> logger, ScooterListService listService) 
         {
             _service = listService;
             _logger = logger;
-            ScooterEventHub = hub;
         }
 
-        public override Task<ScooterResponse> SetScooter(ScooterRequest request, ServerCallContext context)
+        public override async Task<ScooterResponse> AddScooter(MacRequest request, ServerCallContext context)
         {
-            _logger.LogInformation($"{request.Mac} {request.Position}");
-            _service.Add(request);
-            ScooterEventHub.SendEventConnect(request);
-            return new Task<ScooterResponse>(() => { return new ScooterResponse() { LastId = _service.Scooters.Count().ToString() }; });
+            _service.AddScooter(request);
+            return new ScooterResponse() { LastId = _service.Scooters.Count().ToString() };
         }
 
-        public override Task<ScooterResponse> SetPropertyScooter(ScooterPropertyUpdateRequest request, ServerCallContext context)
+        public override async Task<ScooterResponse> ChangeBatteryLevel(BatteryLevelRequest request, ServerCallContext context)
         {
-            _service.Update(request.Mac, request.PropertyName, request.PropertyValue);
-            ScooterEventHub.SendEventProperty(request);
-            return new Task<ScooterResponse>(() => { return new ScooterResponse() { LastId = _service.Scooters.Count().ToString() }; });
+            _service.ChangeBatteryLevel(request);
+            return new ScooterResponse() { LastId = _service.Scooters.Count().ToString() };
+        }
+
+        public override async Task<ScooterResponse> ChangePosition(PositionRequest request, ServerCallContext context)
+        {
+            _service.ChangePosition(request);
+            return new ScooterResponse() { LastId = _service.Scooters.Count().ToString() };
+        }
+
+        public override async Task<ScooterResponse> ChangeRentalTime(RentalTimeRequest request, ServerCallContext context)
+        {
+            _service.ChangeRentalTime(request);
+            return new ScooterResponse() { LastId = _service.Scooters.Count().ToString() };
+        }
+
+        public override async Task<ScooterResponse> ChangeSpeed(SpeedRequest request, ServerCallContext context)
+        {
+            _service.ChangeSpeed(request);
+            return new ScooterResponse() { LastId = _service.Scooters.Count().ToString() };
         }
     }
 }

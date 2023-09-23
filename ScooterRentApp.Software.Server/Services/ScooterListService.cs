@@ -1,49 +1,115 @@
-﻿namespace ScooterRentApp.Software.Server.Services
+﻿using Google.Protobuf;
+using Grpc.Core;
+using Microsoft.AspNetCore.SignalR;
+using ScooterRent.Hardware.HAL;
+using ScooterRent.Software.Server.Hubs;
+using ScooterRent.Software.Server.Models;
+using System.Collections.Generic;
+
+namespace ScooterRentApp.Software.Server.Services
 {
     public class ScooterListService
     {
         private readonly ILogger<ScooterListService> logger;
 
-        public List<ScooterRequest> Scooters { get; set; }
+        public IEnumerable<IBaseScooter> Scooters { get { return _Scooters.Values.ToList(); } }
 
-        public ScooterListService(ILogger<ScooterListService> _logger)
+        public Dictionary<string, ServerScooter> _Scooters;
+
+        ScooterEventHub _EventHub;
+
+        public ScooterListService(ILogger<ScooterListService> _logger, ScooterEventHub hub)
         {
-            Scooters = new List<ScooterRequest>();
-            //Scooters.Add(new ScooterRequest() { Mac = "qwe1", BatteryLevel = "asd", Position = "zxc", RentalTime = "200", Speed = "24" });
-            //Scooters.Add(new ScooterRequest() { Mac = "qwe2", BatteryLevel = "asd", Position = "zxc", RentalTime = "0", Speed = "24" });
+            _Scooters = new Dictionary<string, ServerScooter>();
             this.logger = _logger;
+            _EventHub = hub;
         }
 
-        public void Add(ScooterRequest sc)
+        public void AddScooter(MacRequest request)
         {
-            logger.LogInformation($"Scooter {sc.Mac} добавлен в список");
-            Scooters.Add(sc);
+            _Scooters.TryAdd(BitConverter.ToString(request.Mac.ToByteArray()), new ServerScooter(request.Mac.ToByteArray()));
+            _EventHub.Clients.Group("Manager").SendAsync("AddScooter", "123");
+            return;
         }
 
-        public void Update(string mac, string property, string val)
+        public void ChangeBatteryLevel(BatteryLevelRequest request)
         {
-            //logger.LogInformation($"Обновление свойства");
-            var f = Scooters.First(x => x.Mac == mac);
-            if (f != null)
+            string mac = BitConverter.ToString(request.Mac.ToByteArray());
+            if(_Scooters.ContainsKey(BitConverter.ToString(request.Mac.ToByteArray())))
             {
-                switch (property)
+                var scooter = _Scooters[mac];
+                scooter.BatteryLevel = (byte)(request.BatteryLevel & 0xFF);
+
+                if(scooter.RentalTime != 0)
                 {
-                    case "mac":
-                        f.Mac = val;
-                        break;
-                    case "position":
-                        f.Position = val;
-                        break;
-                    case "batterylevel":
-                        f.BatteryLevel = val;
-                        break;
-                    case "speed":
-                        f.Speed = val;
-                        break;
-                    case "rentaltime":
-                        f.RentalTime = val;
-                        break;
+                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", "123");
                 }
+                else
+                {
+                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", "000");
+                }
+                return;
+            }
+        }
+
+        public void ChangePosition(PositionRequest request)
+        {
+            string mac = BitConverter.ToString(request.Mac.ToByteArray());
+            if (_Scooters.ContainsKey(BitConverter.ToString(request.Mac.ToByteArray())))
+            {
+                var scooter = _Scooters[mac];
+                scooter.Position.Latitude = request.Latitude;
+                scooter.Position.Longitude = request.Longitude;
+
+                if (scooter.RentalTime != 0)
+                {
+                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", "123");
+                }
+                else
+                {
+                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", "000");
+                }
+                return;
+            }
+        }
+
+        public void ChangeRentalTime(RentalTimeRequest request)
+        {
+            string mac = BitConverter.ToString(request.Mac.ToByteArray());
+            if (_Scooters.ContainsKey(BitConverter.ToString(request.Mac.ToByteArray())))
+            {
+                var scooter = _Scooters[mac];
+                scooter.RentalTime = (ushort)request.RentalTime;
+
+                if (scooter.RentalTime != 0)
+                {
+                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", "123");
+                }
+                else
+                {
+                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", "000");
+                }
+                return;
+            }
+        }
+
+        public void ChangeSpeed(SpeedRequest request)
+        {
+            string mac = BitConverter.ToString(request.Mac.ToByteArray());
+            if (_Scooters.ContainsKey(BitConverter.ToString(request.Mac.ToByteArray())))
+            {
+                var scooter = _Scooters[mac];
+                scooter.Speed = (sbyte)request.Speed;
+
+                if (scooter.RentalTime != 0)
+                {
+                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", "123");
+                }
+                else
+                {
+                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", "000");
+                }
+                return;
             }
         }
     }

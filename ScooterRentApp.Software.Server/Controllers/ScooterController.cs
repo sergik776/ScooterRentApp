@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ScooterRent.Hardware.HAL;
+using ScooterRent.Software.Server.Models;
 using ScooterRentApp.Software.Server.Services;
 using System.Security.Claims;
 using System.Text;
@@ -23,15 +25,29 @@ namespace ScooterRentApp.Software.Server.Controllers
         }
 
         [HttpGet()]
-        public IEnumerable<ScooterRequest> GetAll()
+        public IEnumerable<ScooterDTO> GetAll()
         {
             if (RolesScooterAuth.Any(x => x == "Manager"))
             {
-                return ScooterService.Scooters;
+                return ScooterService.Scooters.Select(x=> new ScooterDTO()
+                {
+                     Speed = x.Speed,
+                     BatteryLevel = x.BatteryLevel,
+                     Position = x.Position,
+                     RentalTime = x.RentalTime,
+                     MAC = BitConverter.ToString(x.MAC.GetAddressBytes()).Replace("-", "")
+                });
             }
             else
             {
-                return ScooterService.Scooters.Where(x => x.RentalTime == "0");
+                return ScooterService.Scooters.Where(x => x.RentalTime != 0).Select(x => new ScooterDTO()
+                {
+                    Speed = x.Speed,
+                    BatteryLevel = x.BatteryLevel,
+                    Position = x.Position,
+                    RentalTime = x.RentalTime,
+                    MAC = BitConverter.ToString(x.MAC.GetAddressBytes()).Replace("-", "")
+                });
             }
         }
 
