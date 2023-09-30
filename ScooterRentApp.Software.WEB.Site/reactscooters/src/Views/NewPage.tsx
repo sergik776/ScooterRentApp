@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../data/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import * as signalR from '@microsoft/signalr';
 
 
 function NewPage() {
@@ -11,44 +10,6 @@ function NewPage() {
     const navigate = useNavigate();
     const [selectedRow, setSelectedRow] = useState<number | null>(null);
     const [rentSeconds, setRentSeconds] = useState<number>(0);
-
-    const [hubConnection, setHubConnection] = useState<signalR.HubConnection | null>(null);
-
-    useEffect(() => {
-        // Создаем SignalR подключение при монтировании компонента
-        const newHubConnection = new signalR.HubConnectionBuilder()
-            .withUrl("http://192.168.2.200:5272/ScooterHub",
-            {
-                accessTokenFactory: () => tokens.access_token
-            }) // Замените на свой URL хаба
-            .build();
-
-        // Настраиваем обработчики событий от сервера SignalR
-        newHubConnection.on("AddScooter", (message: string) => {
-            console.log(`AddScooter ${message}`);
-            // Добавьте обработку событий от сервера, как вам необходимо
-        });
-
-        newHubConnection.on("UpdateScooter", (message: string) => {
-            console.log(`UpdateScooter ${message}`);
-            // Добавьте обработку событий от сервера, как вам необходимо
-        });
-
-        // Запускаем SignalR подключение
-        newHubConnection.start()
-            .then(() => {
-                console.log('SignalR connection started successfully.');
-                setHubConnection(newHubConnection);
-            })
-            .catch(error => console.error('Error starting SignalR connection:', error));
-
-        return () => {
-            // Отключаем SignalR подключение при размонтировании компонента
-            if (hubConnection) {
-                hubConnection.stop().then(() => console.log('SignalR connection stopped.'));
-            }
-        };
-    }, []);
 
     const handleRowClick = (index: number) => {
         if (index === selectedRow) {

@@ -27,8 +27,9 @@ namespace ScooterRentApp.Software.Server.Services
 
         public void AddScooter(MacRequest request)
         {
-            _Scooters.TryAdd(BitConverter.ToString(request.Mac.ToByteArray()), new ServerScooter(request.Mac.ToByteArray()));
-            _EventHub.Clients.Group("Manager").SendAsync("AddScooter", "123");
+            string mac = BitConverter.ToString(request.Mac.ToByteArray());
+            _Scooters.TryAdd(mac, new ServerScooter(request.Mac.ToByteArray()));
+            _EventHub.Clients.Group("Manager").SendAsync("AddScooter", new ScooterProperty(mac, Enums.RecieveProperty.MAC, request.Mac));
             return;
         }
 
@@ -42,11 +43,11 @@ namespace ScooterRentApp.Software.Server.Services
 
                 if(scooter.RentalTime != 0)
                 {
-                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", "123");
+                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.BateryLevel, request.BatteryLevel));
                 }
                 else
                 {
-                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", "000");
+                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.BateryLevel, request.BatteryLevel));
                 }
                 return;
             }
@@ -63,11 +64,11 @@ namespace ScooterRentApp.Software.Server.Services
 
                 if (scooter.RentalTime != 0)
                 {
-                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", "123");
+                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.Position, request.Latitude));
                 }
                 else
                 {
-                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", "000");
+                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.Position, request.Latitude));
                 }
                 return;
             }
@@ -83,11 +84,11 @@ namespace ScooterRentApp.Software.Server.Services
 
                 if (scooter.RentalTime != 0)
                 {
-                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", "123");
+                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.RentalTime, request.RentalTime));
                 }
                 else
                 {
-                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", "000");
+                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.RentalTime, request.RentalTime));
                 }
                 return;
             }
@@ -103,11 +104,11 @@ namespace ScooterRentApp.Software.Server.Services
 
                 if (scooter.RentalTime != 0)
                 {
-                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", "123");
+                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.Speed, request.Speed));
                 }
                 else
                 {
-                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", "000");
+                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.Speed, request.Speed));
                 }
                 return;
             }

@@ -27,7 +27,7 @@ namespace ScooterRent.Software.Server.Hubs
         {
             if (Clients != null)
             {
-                await Clients.All.SendAsync("ScooterPropercyChanged", "1122334455");
+                await Clients.All.SendAsync("ScooterPropercyChanged", new ScooterProperty());
             }
         }
     }

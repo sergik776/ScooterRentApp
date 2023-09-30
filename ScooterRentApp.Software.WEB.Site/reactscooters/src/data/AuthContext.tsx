@@ -15,8 +15,8 @@ interface Tokens {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+    console.log('AuthContextProvider rendered');
     const [tokens, setTokens] = useState<Tokens>(() => {
-        // ������� �������� ������ �� localStorage ��� ������ ��������
         const storedTokens = localStorage.getItem('tokens');
         return storedTokens ? JSON.parse(storedTokens) : { access_token: '', refresh_token: '' };
     });
@@ -33,10 +33,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             if (response.status === 200) {
                 console.log('got new tokens by refresh')
                 const tokenData = await response.json();
-                console.log(tokenData);
                 setTokens({
                     access_token: tokenData.access_token,
-                    refresh_token: tokenData.refresh_token, // ���������� ������ refresh_token
+                    refresh_token: tokenData.refresh_token,
                 });
                 console.log('tokens setted');
             } else {
@@ -49,7 +48,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     useEffect(() => {
-        // ���������� ������� � localStorage ��� �� ����������
         localStorage.setItem('tokens', JSON.stringify(tokens));
     }, [tokens]);
 

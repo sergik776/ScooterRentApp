@@ -18,12 +18,10 @@ function LoginPage() {
         });
         console.log(response);
         const tokenData = await response.json();
-        console.log(tokenData);
         setTokens({
             access_token: tokenData.access_token,
             refresh_token: tokenData.refresh_token
         });
-        
         navigate('/newpage');
     }
 
