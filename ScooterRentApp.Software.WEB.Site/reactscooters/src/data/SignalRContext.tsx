@@ -25,12 +25,12 @@ export const SignalRProvider: React.FC<SignalRProviderProps> = ({ children }) =>
   useEffect(() => {
     // Создание объекта SignalR и подписка на события
       console.log('Инициализация');
-    hubConnection.on("AddScooter", (obj: ScooterProperty) => {
-      console.log(`AddScooter ${JSON.stringify(obj)}`);
-    });
-    hubConnection.on("UpdateScooter", (obj: ScooterProperty) => {
-      console.log(`UpdateScooter ${JSON.stringify(obj)}`);
-    });
+    // hubConnection.on("AddScooter", (obj: ScooterProperty) => {
+    //   console.log(`AddScooter ${JSON.stringify(obj)}`);
+    // });
+    // hubConnection.on("UpdateScooter", (obj: ScooterProperty) => {
+    //   console.log(`UpdateScooter ${JSON.stringify(obj)}`);
+    // });
     console.log('Подписка завершена');
     console.log(hubConnection?.state);
     setHubConnection(hubConnection);
@@ -41,6 +41,10 @@ export const SignalRProvider: React.FC<SignalRProviderProps> = ({ children }) =>
       }
     };
   }, []);
+
+  useEffect(()=>{
+    console.log("==========================Token was changed===================================");
+  }, [tokens]);
 
   useEffect(() => {
     console.log('Навигация');
@@ -81,17 +85,3 @@ export const SignalRProvider: React.FC<SignalRProviderProps> = ({ children }) =>
   );
 };
 
-type ScooterProperty = {
-  Mac : string,
-  PropertyType : PropertyTypes,
-  Value : any
-}
-
-enum PropertyTypes
-{
-  BateryLevel,
-  RentalTime,
-  Speed,
-  Position,
-  MAC
-}

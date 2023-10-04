@@ -29,7 +29,7 @@ namespace ScooterRentApp.Software.Server.Services
         {
             string mac = BitConverter.ToString(request.Mac.ToByteArray());
             _Scooters.TryAdd(mac, new ServerScooter(request.Mac.ToByteArray()));
-            _EventHub.Clients.Group("Manager").SendAsync("AddScooter", new ScooterProperty(mac, Enums.RecieveProperty.MAC, request.Mac));
+            _EventHub.Clients.Group("Manager").SendAsync("AddScooter", new ScooterProperty(mac.Replace("-", ""), Enums.RecieveProperty.MAC, request.Mac));
             return;
         }
 
@@ -43,11 +43,11 @@ namespace ScooterRentApp.Software.Server.Services
 
                 if(scooter.RentalTime != 0)
                 {
-                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.BateryLevel, request.BatteryLevel));
+                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", new ScooterProperty(mac.Replace("-", ""), Enums.RecieveProperty.BateryLevel, request.BatteryLevel));
                 }
                 else
                 {
-                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.BateryLevel, request.BatteryLevel));
+                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", new ScooterProperty(mac.Replace("-", ""), Enums.RecieveProperty.BateryLevel, request.BatteryLevel));
                 }
                 return;
             }
@@ -64,11 +64,11 @@ namespace ScooterRentApp.Software.Server.Services
 
                 if (scooter.RentalTime != 0)
                 {
-                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.Position, request.Latitude));
+                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", new ScooterProperty(mac.Replace("-", ""), Enums.RecieveProperty.Position, request.Latitude));
                 }
                 else
                 {
-                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.Position, request.Latitude));
+                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", new ScooterProperty(mac.Replace("-", ""), Enums.RecieveProperty.Position, request.Latitude));
                 }
                 return;
             }
@@ -84,11 +84,11 @@ namespace ScooterRentApp.Software.Server.Services
 
                 if (scooter.RentalTime != 0)
                 {
-                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.RentalTime, request.RentalTime));
+                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", new ScooterProperty(mac.Replace("-", ""), Enums.RecieveProperty.RentalTime, request.RentalTime));
                 }
                 else
                 {
-                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.RentalTime, request.RentalTime));
+                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", new ScooterProperty(mac.Replace("-", ""), Enums.RecieveProperty.RentalTime, request.RentalTime));
                 }
                 return;
             }
@@ -104,11 +104,11 @@ namespace ScooterRentApp.Software.Server.Services
 
                 if (scooter.RentalTime != 0)
                 {
-                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.Speed, request.Speed));
+                    _EventHub.Clients.Group("User").SendAsync("UpdateScooter", new ScooterProperty(mac.Replace("-", ""), Enums.RecieveProperty.Speed, request.Speed));
                 }
                 else
                 {
-                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", new ScooterProperty(mac, Enums.RecieveProperty.Speed, request.Speed));
+                    _EventHub.Clients.Group("Manager").SendAsync("UpdateScooter", new ScooterProperty(mac.Replace("-", ""), Enums.RecieveProperty.Speed, request.Speed));
                 }
                 return;
             }
